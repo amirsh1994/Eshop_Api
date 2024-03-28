@@ -3,7 +3,7 @@ using Common.Domain.Exceptions;
 
 namespace Common.Domain;
 
-public class Money:BaseValueObject
+public class Money:ValueObject
 {
     public int Value { get; private set; }
 
