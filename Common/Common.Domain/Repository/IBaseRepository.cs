@@ -4,9 +4,9 @@ namespace Common.Domain.Repository;
 
 public interface IBaseRepository<T> where T : BaseEntity
 {
-    Task<T?> GetAsync(Guid id);
+    Task<T?> GetAsync(long id);
 
-    Task<T?> GetTracking(Guid id);
+    Task<T?> GetTracking(long id);
 
     //Task AddAsync(T entity);
 
@@ -24,7 +24,7 @@ public interface IBaseRepository<T> where T : BaseEntity
 
     bool Exists(Expression<Func<T, bool>> expression);
 
-    T? Get(Guid id);
+    T? Get(long id);
 }
 
 public interface IMongodbRepository<TEntity> where TEntity : BaseEntity
