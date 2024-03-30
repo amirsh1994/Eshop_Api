@@ -20,11 +20,11 @@ public class OrderItem : BaseEntity
 
     public int TotalPrice => Price * Count;
 
-    public OrderItem(long orderId, long inventoryId, int count, int price)
+    public OrderItem(/*long orderId,*/ long inventoryId, int count, int price)
     {
         CountGuard(count);
         PriceGuard(price);
-        OrderId = orderId;
+        //OrderId = orderId;
         InventoryId = inventoryId;
         Count = count;
         Price = price;

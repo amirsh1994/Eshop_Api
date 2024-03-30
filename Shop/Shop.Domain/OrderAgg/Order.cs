@@ -7,6 +7,11 @@ namespace Shop.Domain.OrderAgg;
 
 public class Order:AggregateRoot
 {
+
+    private Order()
+    {
+
+    }
     public Order(long userId)
     {
         UserId = userId;
@@ -44,19 +49,23 @@ public class Order:AggregateRoot
     public OrderAddress? Address { get; private set; }
 
 
-    private Order()
-    {
-        
-    }
 
     public void AddItem(OrderItem item)
     {
+        ChangeOrderGuard();
+        var oldItem = Items.FirstOrDefault(x => x.InventoryId == item.InventoryId);
+        if (oldItem!=null)
+        {
+             oldItem.ChangeCount(oldItem.Count+item.Count);
+             return;
+        }
         Items.Add(item);
 
     }
 
     public void RemoveItem(long orderItemId)
     {
+        ChangeOrderGuard();
         var orderItem = Items.FirstOrDefault(x => x.Id == orderItemId);
         if (orderItem!=null)
         {
@@ -68,6 +77,7 @@ public class Order:AggregateRoot
 
     public void ChangeCountItem(long itemId,int newCount)
     {
+        ChangeOrderGuard();
         var currentItem = Items.FirstOrDefault(x => x.Id == itemId);
         if (currentItem == null)
         {
@@ -84,7 +94,16 @@ public class Order:AggregateRoot
 
     public void CheckOut(OrderAddress orderAddress)
     {
+        ChangeOrderGuard();
         this.Address = orderAddress;
 
+    }
+
+    public void ChangeOrderGuard()
+    {
+        if (Status == OrderStatus.Pending == false)
+        {
+            throw new InvalidDomainDataException("تنها زمانی اردر رو میشه اضافه کرد که در وضعیتش پندینگ باشد");
+        }
     }
 }

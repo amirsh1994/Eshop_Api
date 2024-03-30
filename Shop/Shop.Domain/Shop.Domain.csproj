@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="obj\" />
     <Folder Include="OrderAgg\Repository\" />
     <Folder Include="ProductAgg\Repository\" />
     <Folder Include="RoleAgg\Repository\" />
