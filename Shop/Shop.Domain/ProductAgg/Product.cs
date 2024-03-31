@@ -6,7 +6,7 @@ using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Domain.ProductAgg;
 
-public class Product:AggregateRoot
+public class Product : AggregateRoot
 {
     public string Title { get; private set; }
 
@@ -30,12 +30,13 @@ public class Product:AggregateRoot
 
     private Product()
     {
-        
+
     }
-    public Product(string title, string imageName, string description, long categoryId, long subCategoryId, long firstSubCategoryId, 
+    public Product(string title, string imageName, string description, long categoryId, long subCategoryId, long firstSubCategoryId,
         string slug, SeoData seoData, IProductDomainService domainService)
     {
-        Guard(title,imageName,description,slug,domainService);
+        NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+        Guard(title, description, slug, domainService);
         Title = title;
         ImageName = imageName;
         Description = description;
@@ -44,21 +45,26 @@ public class Product:AggregateRoot
         FirstSubCategoryId = firstSubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
-        Images=new List<ProductImage>();
+        Images = new List<ProductImage>();
         Specifications = new List<ProductSpecification>();
     }
-    public void EditProduct(string title, string imageName, string description, long categoryId, long subCategoryId, long firstSubCategoryId,
+    public void EditProduct(string title, string description, long categoryId, long subCategoryId, long firstSubCategoryId,
         string slug, SeoData seoData, IProductDomainService domainService)
     {
-        Guard(title, imageName, description, slug, domainService);
+        Guard(title, description, slug, domainService);
         Title = title;
-        ImageName = imageName;
         Description = description;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
         FirstSubCategoryId = firstSubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
+    }
+
+    public void SetProductImage(string imageName)
+    {
+        NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+        this.ImageName=imageName;
     }
 
     public void AddImage(ProductImage productImage)
@@ -70,7 +76,7 @@ public class Product:AggregateRoot
     public void RemoveImage(long imageId)
     {
         var imageName = Images.FirstOrDefault(x => x.Id == imageId);
-        if (imageName==null)
+        if (imageName == null)
         {
             return;
         }
@@ -79,18 +85,17 @@ public class Product:AggregateRoot
 
     public void SetSpecification(List<ProductSpecification> specifications)
     {
-        specifications.ForEach(x => x.ProductId =Id);
+        specifications.ForEach(x => x.ProductId = Id);
         this.Specifications = specifications;
     }
 
-    public void Guard(string title, string imageName, string description,string slug,IProductDomainService domainService)
+    public void Guard(string title, string description, string slug, IProductDomainService domainService)
     {
 
-        NullOrEmptyDomainDataException.CheckString(title,nameof(title));
-        NullOrEmptyDomainDataException.CheckString(imageName,nameof(imageName));
-        NullOrEmptyDomainDataException.CheckString(description,nameof(description));
-        NullOrEmptyDomainDataException.CheckString(slug,nameof(slug));
-        if (slug!=Slug)
+        NullOrEmptyDomainDataException.CheckString(title, nameof(title));
+        NullOrEmptyDomainDataException.CheckString(description, nameof(description));
+        NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
+        if (slug != Slug)
         {
             if (domainService.IsSlugExists(slug.ToSlug()))
             {

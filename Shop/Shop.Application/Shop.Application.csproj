@@ -10,8 +10,6 @@
     <Folder Include="Comments\Create\" />
     <Folder Include="Comments\ChangeStatus\" />
     <Folder Include="Products\AddImage\" />
-    <Folder Include="Products\Create\" />
-    <Folder Include="Products\Edit\" />
     <Folder Include="Products\RemoveImage\" />
     <Folder Include="Roles\Create\" />
     <Folder Include="Roles\Edit\" />
