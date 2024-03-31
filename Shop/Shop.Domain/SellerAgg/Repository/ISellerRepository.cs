@@ -10,6 +10,7 @@ public interface ISellerRepository:IBaseRepository<Seller>
 public class InventoryResult
 {
     public long Id { get; set; }
+
     public long SellerId { get; set; }
 
     public long ProductId { get; set; }
@@ -17,4 +18,6 @@ public class InventoryResult
     public int Count { get; set; }
 
     public int Price { get; set; }
+
+
 }

@@ -36,6 +36,26 @@ public class OrderItem : BaseEntity
         this.Count=newCount;
     }
 
+    public void IncreaseCount(int count)
+    {
+        CountGuard(count);
+        this.Count+=count;
+    }
+    public void DecreaseCount(int count)
+    {
+        CountGuard(count);
+        if (Count==1)
+        {
+            return;
+        }
+
+        if (Count-count<0)
+        {
+            return;
+        }
+        this.Count -= count;
+    }
+
     public void SetPrice(int newPrice)
     {
         PriceGuard(newPrice);

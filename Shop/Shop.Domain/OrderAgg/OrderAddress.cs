@@ -18,13 +18,15 @@ public class OrderAddress:BaseEntity
 
     public string Family { get; private set; }
 
+    public string Name { get; private set; }
+
     public string NationalCode { get; private set; }
 
     public Order Order { get; set; }
 
    
 
-    public OrderAddress( string shire, string city, string postalCode, string postalAddress, string phoneNumber, string family, string nationalCode)
+    public OrderAddress( string shire, string city, string postalCode, string postalAddress, string phoneNumber, string family, string nationalCode, string name)
     {
        
         Shire = shire;
@@ -34,6 +36,6 @@ public class OrderAddress:BaseEntity
         PhoneNumber = phoneNumber;
         Family = family;
         NationalCode = nationalCode;
-       
+        Name = name;
     }
 }

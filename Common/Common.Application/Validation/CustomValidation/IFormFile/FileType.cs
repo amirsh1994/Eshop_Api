@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Common.Application.Validation.CustomValidation.IFormFile
 {

@@ -31,6 +31,10 @@ public class Order:AggregateRoot
 
     public ShippingMethode Methode { get; set; }
 
+    public OrderAddress? Address { get; private set; }
+
+
+
     public int TotalPrice
     {
         get
@@ -46,7 +50,7 @@ public class Order:AggregateRoot
 
     public int ItemCount => Items.Count;
 
-    public OrderAddress? Address { get; private set; }
+  
 
 
 
@@ -70,11 +74,32 @@ public class Order:AggregateRoot
         if (orderItem!=null)
         {
             Items.Remove(orderItem);
+            //orderItem.DecreaseCount(orderItem.Count);
         }
 
        
     }
 
+    public void IncreaseItemCount(long orderItemId,int  count)
+    {
+        ChangeOrderGuard();
+        var currentItem = Items.FirstOrDefault(x => x.Id == orderItemId);
+        if (currentItem == null)
+        {
+            throw new NullOrEmptyDomainDataException("orderItem Was Not Found With Such Id");
+        }
+        currentItem.IncreaseCount(count);
+    }
+    public void DecreaseItemCount(long orderItemId, int count)
+    {
+        ChangeOrderGuard();
+        var currentItem = Items.FirstOrDefault(x => x.Id == orderItemId);
+        if (currentItem == null)
+        {
+            throw new NullOrEmptyDomainDataException("orderItem Was Not Found With Such Id");
+        }
+        currentItem.DecreaseCount(count);
+    }
     public void ChangeCountItem(long itemId,int newCount)
     {
         ChangeOrderGuard();
@@ -103,7 +128,7 @@ public class Order:AggregateRoot
     {
         if (Status == OrderStatus.Pending == false)
         {
-            throw new InvalidDomainDataException("تنها زمانی اردر رو میشه اضافه کرد که در وضعیتش پندینگ باشد");
+            throw new InvalidDomainDataException("امکان ویرایش این محصول وجود ندارد");
         }
     }
 }
