@@ -73,14 +73,14 @@ public class Product : AggregateRoot
         Images.Add(productImage);
     }
 
-    public void RemoveImage(long imageId)
+    public string RemoveImage(long imageId)
     {
         var imageName = Images.FirstOrDefault(x => x.Id == imageId);
         if (imageName == null)
-        {
-            return;
-        }
+            throw new NullOrEmptyDomainDataException("عکس یافت نشد");
+        
         Images.Remove(imageName);
+        return imageName.ImageName;
     }
 
     public void SetSpecification(List<ProductSpecification> specifications)
@@ -89,7 +89,7 @@ public class Product : AggregateRoot
         this.Specifications = specifications;
     }
 
-    public void Guard(string title, string description, string slug, IProductDomainService domainService)
+    private void Guard(string title, string description, string slug, IProductDomainService domainService)
     {
 
         NullOrEmptyDomainDataException.CheckString(title, nameof(title));

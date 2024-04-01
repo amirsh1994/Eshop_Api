@@ -9,8 +9,6 @@
   <ItemGroup>
     <Folder Include="Comments\Create\" />
     <Folder Include="Comments\ChangeStatus\" />
-    <Folder Include="Products\AddImage\" />
-    <Folder Include="Products\RemoveImage\" />
     <Folder Include="Roles\Create\" />
     <Folder Include="Roles\Edit\" />
     <Folder Include="Sellers\Create\" />
