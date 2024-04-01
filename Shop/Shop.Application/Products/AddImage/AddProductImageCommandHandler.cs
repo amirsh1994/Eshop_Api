@@ -6,7 +6,7 @@ using Shop.Domain.ProductAgg.Repository;
 
 namespace Shop.Application.Products.AddImage;
 
-public class AddProductImageCommandHandler : IBaseCommandHandler<AddProductImageCommand>
+public class AddProductImageCommandHandler : IBaseCommandHandler<AddProductImageCommand>//برا موقعی که میخواییم تو گالری ثبت شه
 {
     private readonly IProductRepository _repository;
     private readonly IFileService _fileService;
