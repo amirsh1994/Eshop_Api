@@ -8,7 +8,7 @@ public interface IBaseRepository<T> where T : BaseEntity
 
     Task<T?> GetTracking(long id);
 
-    //Task AddAsync(T entity);
+    Task AddAsync(T entity);
 
     void Add(T entity);
 

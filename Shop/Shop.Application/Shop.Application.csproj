@@ -10,8 +10,6 @@
     <Folder Include="Comments\Create\" />
     <Folder Include="Comments\ChangeStatus\" />
     <Folder Include="Roles\Edit\" />
-    <Folder Include="Sellers\Create\" />
-    <Folder Include="Sellers\Edit\" />
     <Folder Include="Sellers\ChangeStatus\" />
     <Folder Include="Sellers\AddInventory\" />
     <Folder Include="Sellers\EditInventory\" />
