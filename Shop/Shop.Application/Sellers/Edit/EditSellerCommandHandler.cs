@@ -21,6 +21,7 @@ internal class EditSellerCommandHandler:IBaseCommandHandler<EditSellerCommand>
         if(seller == null) 
             return OperationResult.NotFound();
         seller.Edit(request.ShopName,request.NationalCode,_service);
+        seller.ChangeStatus(request.Status);
 
         await _repository.Save();
         return OperationResult.Success();

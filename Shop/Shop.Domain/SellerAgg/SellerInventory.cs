@@ -13,7 +13,9 @@ public class SellerInventory : BaseEntity //موجودی های فروشنده
 
     public int Price { get; private set; }
 
-    public SellerInventory(long productId, int count, int price)
+    public int? DiscountPercentage { get; private set; }
+
+    public SellerInventory(long productId, int count, int price, int? percentageDiscount = null)
     {
         if (price < 1 || count < 0)
         {
@@ -22,7 +24,18 @@ public class SellerInventory : BaseEntity //موجودی های فروشنده
         ProductId = productId;
         Count = count;
         Price = price;
+        DiscountPercentage = percentageDiscount;
     }
 
+    public void Edit(int count, int price, int? percentageDiscount = null)
+    {
+        if (price < 1 || count < 0)
+        {
+            throw new InvalidDomainDataException("مقدار قیمت یا تعداد از یک  یا صفر کمتر میباشد");
+        }
+        Count = count;
+        Price = price;
+        DiscountPercentage = percentageDiscount;
 
+    }
 }

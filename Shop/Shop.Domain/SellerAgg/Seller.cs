@@ -41,7 +41,7 @@ public class Seller : AggregateRoot
     public void Edit(string shopName, string nationalCode, ISellerDomainService domainService)
     {
         Guard(shopName, nationalCode);
-        if(nationalCode!=NationalCode)//یعنی اینکه کدم لی رو تغییر داده 
+        if(nationalCode!=NationalCode)//یعنی اینکه کد ملی رو تغییر داده 
             if (domainService.NationalCodeExistsInDataBase(nationalCode))
                 throw new InvalidDomainDataException("کد ملی متعلق به شخص دیگری هست....");
         this.NationalCode = nationalCode;
@@ -57,29 +57,29 @@ public class Seller : AggregateRoot
         Inventories.Add(inventory);
     }
 
-    public void EditInventory(SellerInventory newInventory)
+    public void EditInventory(long newInventoryId,int count,int price,int ? discount)
     {
-        var oldInventory = Inventories.FirstOrDefault(x => x.Id == newInventory.Id);
+        var oldInventory = Inventories.FirstOrDefault(x => x.Id == newInventoryId);
         if (oldInventory==null)
         {
-            return;
+            throw new NullOrEmptyDomainDataException("همچین موجودی با ایدی یافت نشد ");
         }
-        Inventories.Remove(oldInventory);
-        Inventories.Add(newInventory);
+        //Todo Check Inventories
+        oldInventory.Edit(count,price,discount);
     }
 
-    public void DeleteInventory(long inventoryId)
-    {
-        var currentInventory = Inventories.FirstOrDefault(x => x.Id == inventoryId);
-        if (currentInventory!=null)
-        {
-            Inventories.Remove(currentInventory);
-        }
-        else
-        {
-            throw new NullOrEmptyDomainDataException(" موجدی یافت نشد .....");
-        }
-    }
+    //public void DeleteInventory(long inventoryId)
+    //{
+    //    var currentInventory = Inventories.FirstOrDefault(x => x.Id == inventoryId);
+    //    if (currentInventory!=null)
+    //    {
+    //        Inventories.Remove(currentInventory);
+    //    }
+    //    else
+    //    {
+    //        throw new NullOrEmptyDomainDataException(" موجدی یافت نشد .....");
+    //    }
+    //}
 
     public void Guard(string shopName, string nationalCode)
     {

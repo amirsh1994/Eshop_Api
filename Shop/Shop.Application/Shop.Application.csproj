@@ -11,9 +11,6 @@
     <Folder Include="Comments\ChangeStatus\" />
     <Folder Include="Roles\Edit\" />
     <Folder Include="Sellers\ChangeStatus\" />
-    <Folder Include="Sellers\AddInventory\" />
-    <Folder Include="Sellers\EditInventory\" />
-    <Folder Include="Sellers\DeleteInventory\" />
     <Folder Include="SiteEntiries\Banner\Create\" />
     <Folder Include="SiteEntiries\Banner\Edit\" />
     <Folder Include="SiteEntiries\Slider\Create\" />
