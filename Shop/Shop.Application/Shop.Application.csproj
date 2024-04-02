@@ -11,10 +11,6 @@
     <Folder Include="Comments\ChangeStatus\" />
     <Folder Include="Roles\Edit\" />
     <Folder Include="Sellers\ChangeStatus\" />
-    <Folder Include="SiteEntiries\Banner\Create\" />
-    <Folder Include="SiteEntiries\Banner\Edit\" />
-    <Folder Include="SiteEntiries\Slider\Create\" />
-    <Folder Include="SiteEntiries\Slider\Edit\" />
     <Folder Include="Users\AddAdress\" />
     <Folder Include="Users\ChargeWallet\" />
     <Folder Include="Users\Create\" />
