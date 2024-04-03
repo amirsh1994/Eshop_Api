@@ -10,4 +10,6 @@ public class Directories
 
     public const string SliderImages = "wwwroot/images/sliders";
 
+    public const string UserAvatar = "wwwroot/images/users/avatar";
+
 }

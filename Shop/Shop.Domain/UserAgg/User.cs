@@ -15,6 +15,8 @@ public class User : AggregateRoot
 
     public string Family { get; private set; }
 
+    public string AvatarName { get; private set; }
+
     public string PhoneNumber { get; private set; }
 
     public string Email { get; private set; }
@@ -30,26 +32,35 @@ public class User : AggregateRoot
     public List<Wallet> Wallets { get; private set; } = new();
 
 
-    public User(string name, string family, string phoneNumber, string email, string password, Gender gender, IDomainUserService domainUserService)
+    public User(string name, string family, string phoneNumber, string email, string password, Gender gender, IUserDomainService userDomainService)
     {
-        Guard(phoneNumber,email,domainUserService);
+        Guard(phoneNumber,email,userDomainService);
         Name = name;
         Family = family;
         PhoneNumber = phoneNumber;
         Email = email;
         Password = password;
         Gender = gender;
+        AvatarName = "avatar.png";
     }
 
 
-    public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IDomainUserService domainUserService)
+    public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IUserDomainService userDomainService)
     {
-        Guard(phoneNumber,email,domainUserService);
+        Guard(phoneNumber,email,userDomainService);
         Name = name;
         Family = family;
         PhoneNumber = phoneNumber;
         Email = email;
         Gender = gender;
+    }
+
+    public void SetAvatar(string newImageName)
+    {
+        if (string.IsNullOrWhiteSpace(newImageName))
+            newImageName = "avatar.png";
+
+        this.AvatarName=newImageName;
     }
 
     public void AddAddress(UserAddress userAddress)
@@ -93,11 +104,11 @@ public class User : AggregateRoot
         UserRoles.AddRange(userRoles);
     }
 
-    public static User RegisterUser(string email,string password, string phoneNumber, IDomainUserService domainUserService)
+    public static User RegisterUser(string email,string password, string phoneNumber, IUserDomainService userDomainService)
     {
-        return new User("","", phoneNumber, email,password,Gender.None,domainUserService);
+        return new User("","", phoneNumber, email,password,Gender.None,userDomainService);
     }
-    public void Guard(string phoneNumber, string email,IDomainUserService domainUserService)
+    public void Guard(string phoneNumber, string email,IUserDomainService userDomainService)
     {
         NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
         NullOrEmptyDomainDataException.CheckString(email, nameof(email));
@@ -113,14 +124,14 @@ public class User : AggregateRoot
 
         if (phoneNumber!=PhoneNumber)
         {
-            if (domainUserService.IsPhoneNumberExists(phoneNumber))
+            if (userDomainService.IsPhoneNumberExists(phoneNumber))
             {
                 throw new InvalidDomainDataException("شماره موبایل تکراری هستش  ");
             }
         }
         if (email != Email)
         {
-            if (domainUserService.IsPhoneNumberExists(email))
+            if (userDomainService.IsPhoneNumberExists(email))
             {
                 throw new InvalidDomainDataException("  ایمیل تکراری هست و قبلا تو دیتابیس وجود داشته ");
             }
