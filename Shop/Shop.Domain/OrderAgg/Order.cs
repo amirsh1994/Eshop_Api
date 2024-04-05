@@ -10,7 +10,7 @@ public class Order:AggregateRoot
 
     private Order()
     {
-
+        
     }
     public Order(long userId)
     {

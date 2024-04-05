@@ -9,7 +9,7 @@ public class User : AggregateRoot
 {
     private User()
     {
-        
+
     }
     public string Name { get; private set; }
 
@@ -34,7 +34,7 @@ public class User : AggregateRoot
 
     public User(string name, string family, string phoneNumber, string email, string password, Gender gender, IUserDomainService userDomainService)
     {
-        Guard(phoneNumber,email,userDomainService);
+        Guard(phoneNumber, email, userDomainService);
         Name = name;
         Family = family;
         PhoneNumber = phoneNumber;
@@ -47,7 +47,7 @@ public class User : AggregateRoot
 
     public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IUserDomainService userDomainService)
     {
-        Guard(phoneNumber,email,userDomainService);
+        Guard(phoneNumber, email, userDomainService);
         Name = name;
         Family = family;
         PhoneNumber = phoneNumber;
@@ -60,7 +60,7 @@ public class User : AggregateRoot
         if (string.IsNullOrWhiteSpace(newImageName))
             newImageName = "avatar.png";
 
-        this.AvatarName=newImageName;
+        this.AvatarName = newImageName;
     }
 
     public void AddAddress(UserAddress userAddress)
@@ -69,15 +69,15 @@ public class User : AggregateRoot
         this.UserAddresses.Add(userAddress);
     }
 
-    public void EditAddress(UserAddress newUserAddress)
+    public void EditAddress(UserAddress newUserAddress, long addressId)
     {
-        var oldAddress = UserAddresses.FirstOrDefault(x => x.Id == newUserAddress.Id);
+        var oldAddress = UserAddresses.FirstOrDefault(x => x.Id == addressId);
         if (oldAddress == null)
         {
             throw new NullOrEmptyDomainDataException("Address Not Found...");
         }
-        UserAddresses.Remove(oldAddress);
-        UserAddresses.Add(newUserAddress);
+        oldAddress.Edit(newUserAddress.Shire, newUserAddress.Name, newUserAddress.City,
+            newUserAddress.PostalCode, newUserAddress.PostalAddress, newUserAddress.PhoneNumber, newUserAddress.Family, newUserAddress.NationalCode);
     }
 
     public void DeleteAddress(long userAddressId)
@@ -99,16 +99,16 @@ public class User : AggregateRoot
 
     public void SetRoles(List<UserRole> userRoles)
     {
-        userRoles.ForEach(x=>x.UserId=Id);
+        userRoles.ForEach(x => x.UserId = Id);
         UserRoles.Clear();
         UserRoles.AddRange(userRoles);
     }
 
-    public static User RegisterUser(string email,string password, string phoneNumber, IUserDomainService userDomainService)
+    public static User RegisterUser( string password, string phoneNumber, IUserDomainService userDomainService)
     {
-        return new User("","", phoneNumber, email,password,Gender.None,userDomainService);
+        return new User("", "", phoneNumber, null, password, Gender.None, userDomainService);
     }
-    public void Guard(string phoneNumber, string email,IUserDomainService userDomainService)
+    public void Guard(string phoneNumber, string email, IUserDomainService userDomainService)
     {
         NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
         NullOrEmptyDomainDataException.CheckString(email, nameof(email));
@@ -117,12 +117,12 @@ public class User : AggregateRoot
             throw new InvalidDomainDataException("شماره موبایل 11 رقم می باشد حتما نه کمتر ونه بیشتر ");
         }
 
-        if (email.IsValidEmail()==false)
+        if (email.IsValidEmail() == false)
         {
             throw new InvalidDomainDataException("ایمیل نامعتبر می باشد ");
         }
 
-        if (phoneNumber!=PhoneNumber)
+        if (phoneNumber != PhoneNumber)
         {
             if (userDomainService.IsPhoneNumberExists(phoneNumber))
             {

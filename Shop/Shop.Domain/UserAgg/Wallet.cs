@@ -6,15 +6,16 @@ namespace Shop.Domain.UserAgg;
 
 public class Wallet:BaseEntity
 {
-    public Wallet(int price, string description, bool isFinally, DateTime? finallyDate, WalletType type)
+    public Wallet(int price, string description, bool isFinally, WalletType type)
     {
         if (price < 500)
             throw new InvalidDomainDataException("مبلغ شارژ کیف پول نمیتواند کمتراز 500 باشد");
         Price = price;
         Description = description;
         IsFinally = isFinally;
-        FinallyDate = finallyDate;
         Type = type;
+        if(isFinally)
+            FinallyDate=DateTime.Now;
     }
 
     public long UserId { get;internal set; }
