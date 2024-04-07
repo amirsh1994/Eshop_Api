@@ -29,7 +29,7 @@ public class Order:AggregateRoot
 
     public OrderDiscount? Discount { get; set; }
 
-    public ShippingMethode Methode { get; set; }
+    public OrderShippingMethod Methode { get; set; }
 
     public OrderAddress? Address { get; private set; }
 
