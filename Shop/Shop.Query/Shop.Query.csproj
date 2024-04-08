@@ -8,14 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Categories\GetByParentId\" />
-    <Folder Include="Categories\GetList\" />
-    <Folder Include="Comments\" />
+    <Folder Include="Orders\GetById\" />
     <Folder Include="Users\" />
     <Folder Include="SiteEntities\" />
     <Folder Include="Sellers\" />
     <Folder Include="Roles\" />
     <Folder Include="Products\" />
-    <Folder Include="Orders\" />
   </ItemGroup>
 
   <ItemGroup>
