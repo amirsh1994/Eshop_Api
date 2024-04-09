@@ -9,7 +9,7 @@ public class ProductImage:BaseEntity
 
     public string ImageName { get; private set; }
 
-    public int SortOrder { get; private set; }
+    public int Sequence { get; private set; }
 
     private ProductImage()
     {
@@ -19,7 +19,7 @@ public class ProductImage:BaseEntity
     {
         NullOrEmptyDomainDataException.CheckString(imageName,nameof(imageName));
         ImageName = imageName;
-        SortOrder = sortOrder;
+        Sequence = sortOrder;
     }
 
    

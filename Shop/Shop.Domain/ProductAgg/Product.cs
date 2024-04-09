@@ -18,7 +18,7 @@ public class Product : AggregateRoot
 
     public long SubCategoryId { get; private set; }
 
-    public long FirstSubCategoryId { get; private set; }//Level 3 
+    public long? SecondarySubCategory { get; private set; }//Level 3 
 
     public string Slug { get; private set; }
 
@@ -32,7 +32,7 @@ public class Product : AggregateRoot
     {
 
     }
-    public Product(string title, string imageName, string description, long categoryId, long subCategoryId, long firstSubCategoryId,
+    public Product(string title, string imageName, string description, long categoryId, long subCategoryId, long ?firstSubCategoryId,
         string slug, SeoData seoData, IProductDomainService domainService)
     {
         NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
@@ -42,7 +42,7 @@ public class Product : AggregateRoot
         Description = description;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
-        FirstSubCategoryId = firstSubCategoryId;
+        SecondarySubCategory = firstSubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
         Images = new List<ProductImage>();
@@ -56,7 +56,7 @@ public class Product : AggregateRoot
         Description = description;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
-        FirstSubCategoryId = firstSubCategoryId;
+        SecondarySubCategory = firstSubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
     }
