@@ -15,6 +15,11 @@ public class SellerInventory : BaseEntity //موجودی های فروشنده
 
     public int? DiscountPercentage { get; private set; }
 
+    private SellerInventory()
+    {
+        
+    }
+
     public SellerInventory(long productId, int count, int price, int? percentageDiscount = null)
     {
         if (price < 1 || count < 0)

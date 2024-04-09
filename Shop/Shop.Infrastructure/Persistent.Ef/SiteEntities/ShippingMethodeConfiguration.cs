@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shop.Domain.OrderAgg.ValueObjects;
+using Shop.Domain.SiteEntities;
 
 namespace Shop.Infrastructure.Persistent.Ef.SiteEntities;
 
-public class ShippingMethodeConfiguration:IEntityTypeConfiguration<OrderShippingMethod>
+public class ShippingMethodeConfiguration:IEntityTypeConfiguration<ShippingMethod>
 {
-    public void Configure(EntityTypeBuilder<OrderShippingMethod> builder)
+    
+
+    public void Configure(EntityTypeBuilder<ShippingMethod> builder)
     {
-        builder.Property(x => x.Title)
-            .IsRequired()
-            .HasMaxLength(120);
+        builder.Property(b => b.Title)
+            .HasMaxLength(120).IsRequired();
     }
 }

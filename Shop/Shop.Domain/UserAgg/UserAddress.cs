@@ -26,6 +26,11 @@ public class UserAddress : BaseEntity
 
     public bool ActiveAddress { get; private set; }
 
+    private UserAddress()
+    {
+        
+    }
+
     public UserAddress(string shire, string city, string postalCode, string postalAddress, PhoneNumber phoneNumber, string family, string nationalCode, string name)
     {
         Guard(shire, name, city, postalCode, postalAddress, phoneNumber, family, nationalCode);

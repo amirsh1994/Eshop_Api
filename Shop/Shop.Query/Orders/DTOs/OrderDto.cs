@@ -29,7 +29,11 @@ public class OrderItemDto:BaseDto
 {
     public long OrderId { get;  set; }
 
-    public ProductOrderItem Product { get; set; }
+    public string ProductTitle { get; set; }
+
+    public string ProductSlug { get; set; }
+
+    public string ProductImageName { get; set; }
 
     public string ShopName { get; set; }
 
@@ -42,14 +46,10 @@ public class OrderItemDto:BaseDto
     public int TotalPrice => Price * Count;
 }
 
-public class ProductOrderItem
-{
-    public string ProductTitle { get; set; }
-
-    public string Slug { get; set; }
-
-    public string ImageName { get; set; }
-}
+//public class ProductOrderItem
+//{
+    
+//}
 
 public class OrderFilterData:BaseDto
 {
