@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 using Shop.Domain.ProductAgg;
 using Shop.Infrastructure;
 using Shop.Query.Products.DTOs;
@@ -9,7 +10,7 @@ public static class ProductMapper
 {
     public static ProductDto? Map(this Product? p)
     {
-        if (p==null)
+        if (p == null)
         {
             return null;
         }
@@ -35,18 +36,18 @@ public static class ProductMapper
                 ProductId = x.ProductId,
                 Sequence = x.Sequence
             }).ToList(),
-            Category = new ()
+            Category = new()
             {
                 Id = p.CategoryId
             },
-            SubCategory = new ()
+            SubCategory = new()
             {
                 Id = p.SubCategoryId
             },
-            SecondarySubCategory =p.SecondarySubCategory != null? new ()
+            SecondarySubCategory = p.SecondarySubCategory != null ? new()
             {
-                Id =(long) p.SecondarySubCategory
-            }:null,
+                Id = (long)p.SecondarySubCategory
+            } : null,
         };
     }
     public static ProductFilterData MapListData(this Product p)
@@ -58,37 +59,48 @@ public static class ProductMapper
             ImageName = p.ImageName,
             Slug = p.Slug,
             Title = p.Title,
-            
+
         };
     }
 
-    public static async Task  SetCategories(this ProductDto pDto,ShopContext context)
+    public static async Task SetCategories(this ProductDto pDto, ShopContext context)
     {
-        var category = await context.Categories
-            .Where(x=>x.Id==pDto.Category.Id)
-            .Select(x=>new ProductCategoryDto()
-            {
-                Id = x.Id,
-                ParentId = x.ParentId,
-                SeoData = x.SeoData,
-                Slug = x.Slug,
-                Title = x.Title,
-            })
-            .FirstOrDefaultAsync();
-            
+        //var category = await context.Categories
+        //    .Where(x=>x.Id==pDto.Category.Id)
+        //    .Select(x=>new ProductCategoryDto()
+        //    {
+        //        Id = x.Id,
+        //        ParentId = x.ParentId,
+        //        SeoData = x.SeoData,
+        //        Slug = x.Slug,
+        //        Title = x.Title,
+        //    })
+        //    .FirstOrDefaultAsync();
 
-        var subcategory = await context.Categories
-            .Where(x => x.Id == pDto.SubCategory.Id)
+
+        //var subcategory = await context.Categories
+        //    .Where(x => x.Id == pDto.SubCategory.Id)
+        //    .Select(x => new ProductCategoryDto()
+        //    {
+        //        Id = x.Id,
+        //        ParentId = x.ParentId,
+        //        SeoData = x.SeoData,
+        //        Slug = x.Slug,
+        //        Title = x.Title,
+        //    })
+        //    .FirstOrDefaultAsync();
+
+        var categories = await context.Categories
+            .Where(x => x.Id == pDto.Category.Id || x.Id == pDto.SubCategory.Id)
             .Select(x => new ProductCategoryDto()
             {
                 Id = x.Id,
-                ParentId = x.ParentId,
-                SeoData = x.SeoData,
-                Slug = x.Slug,
                 Title = x.Title,
-            })
-            .FirstOrDefaultAsync();
-        if (pDto.SecondarySubCategory!=null)
+                Slug = x.Slug,
+                ParentId = x.ParentId,
+                SeoData = x.SeoData
+            }).ToListAsync();
+        if (pDto.SecondarySubCategory != null)
         {
             var secondarySubcategory = await context.Categories
                 .Where(x => x.Id == pDto.SecondarySubCategory.Id)
@@ -107,18 +119,11 @@ public static class ProductMapper
                 pDto.SecondarySubCategory = secondarySubcategory;
             }
         }
-       
+
+        pDto.Category = categories.First(x => x.Id == pDto.Category.Id);
+        pDto.SubCategory = categories.First(x => x.Id == pDto.SubCategory.Id);
 
 
-        if (category!=null)
-        {
-            pDto.Category = category;
-        }
-        if (subcategory != null)
-        {
-            pDto.SubCategory = subcategory;
-        }
-       
-       
+
     }
 }
