@@ -9,10 +9,11 @@
   <ItemGroup>
     <Folder Include="Categories\GetByParentId\" />
     <Folder Include="Orders\GetById\" />
+    <Folder Include="Roles\DTOs\" />
+    <Folder Include="Sellers\GetById\" />
+    <Folder Include="SiteEntities\Banners\GetList\" />
+    <Folder Include="SiteEntities\DTOs\" />
     <Folder Include="Users\" />
-    <Folder Include="SiteEntities\" />
-    <Folder Include="Sellers\" />
-    <Folder Include="Roles\" />
   </ItemGroup>
 
   <ItemGroup>
