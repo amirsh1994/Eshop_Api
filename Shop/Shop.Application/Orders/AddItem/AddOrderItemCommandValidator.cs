@@ -2,9 +2,9 @@
 
 namespace Shop.Application.Orders.AddItem;
 
-public class AddOrderCommandValidator : AbstractValidator<AddOrderCommand>
+public class AddOrderItemCommandValidator : AbstractValidator<AddOrderItemCommand>
 {
-    public AddOrderCommandValidator()
+    public AddOrderItemCommandValidator()
     {
         RuleFor(x => x.Count).GreaterThanOrEqualTo(1).WithMessage("تعداد بیشتر از 1 یا مساوی باشد ");
     }

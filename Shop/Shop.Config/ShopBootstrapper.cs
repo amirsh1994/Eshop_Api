@@ -12,6 +12,7 @@ using Shop.Domain.ProductAgg.Services;
 using Shop.Domain.SellerAgg.Services;
 using Shop.Domain.UserAgg.Services;
 using Shop.Infrastructure;
+using Shop.Presentation.Facade;
 using Shop.Query.Categories.GetById;
 
 namespace Shop.Config;
@@ -24,14 +25,13 @@ public static class ShopBootstrapper
         InfrastructureBootstrapper.Init(service,connectionString);
 
         service.AddMediatR(typeof(Directories).Assembly);//Application Command Has Been Registered
-
         service.AddMediatR(typeof(GetCategoryByIdQuery).Assembly);//query Has Been Registered In MediatR
-
         service.AddTransient<IProductDomainService,ProductDomainService>();
         service.AddTransient<ICategoryDomainService,CategoryDomainService>();
         service.AddTransient<ISellerDomainService,SellerDomainService>();
         service.AddTransient<IUserDomainService,UserDomainService>();
         service.AddValidatorsFromAssembly(typeof(CreateRoleCommandValidator).Assembly);
+        service.InitFacadeDependency();
 
 
 

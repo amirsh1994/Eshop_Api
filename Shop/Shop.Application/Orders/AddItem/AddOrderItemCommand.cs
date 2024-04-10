@@ -2,7 +2,7 @@
 
 namespace Shop.Application.Orders.AddItem;
 
-public class AddOrderCommand : IBaseCommand
+public class AddOrderItemCommand : IBaseCommand
 {
     public long InventoryId { get; private set; }
 
@@ -10,7 +10,7 @@ public class AddOrderCommand : IBaseCommand
 
     public long UserId { get; private set; }
 
-    public AddOrderCommand(long inventoryId, int count, long userId)
+    public AddOrderItemCommand(long inventoryId, int count, long userId)
     {
         InventoryId = inventoryId;
         Count = count;

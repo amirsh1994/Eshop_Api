@@ -2,7 +2,7 @@
 
 namespace Shop.Application.Sellers.EditInventory;
 
-public class EditInventoryCommand : IBaseCommand
+public class EditSellerInventoryCommand : IBaseCommand
 {
     public long SellerId { get; private set; }
 
@@ -14,7 +14,7 @@ public class EditInventoryCommand : IBaseCommand
 
     public int? DiscountPercentage { get; private set; }
 
-    public EditInventoryCommand(long sellerId,  int count, int price, int? Discountpercentage, long inventoryId)
+    public EditSellerInventoryCommand(long sellerId,  int count, int price, int? Discountpercentage, long inventoryId)
     {
         SellerId = sellerId;
         Count = count;

@@ -5,19 +5,19 @@ using Shop.Domain.SellerAgg.Repository;
 
 namespace Shop.Application.Orders.AddItem;
 
-public class AddOrderCommandHandler : IBaseCommandHandler<AddOrderCommand>
+public class AddOrderItemCommandHandler : IBaseCommandHandler<AddOrderItemCommand>
 {
     private readonly IOrderRepository _repository;
 
     private readonly ISellerRepository _sellerRepository;
 
-    public AddOrderCommandHandler(IOrderRepository repository, ISellerRepository sellerRepository)
+    public AddOrderItemCommandHandler(IOrderRepository repository, ISellerRepository sellerRepository)
     {
         _repository = repository;
         _sellerRepository = sellerRepository;
     }
 
-    public async Task<OperationResult> Handle(AddOrderCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(AddOrderItemCommand request, CancellationToken cancellationToken)
     {
         var r = await _sellerRepository.GetInventoryById(request.InventoryId);
         if (r == null)
