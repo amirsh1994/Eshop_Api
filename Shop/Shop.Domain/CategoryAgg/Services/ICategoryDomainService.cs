@@ -2,5 +2,5 @@
 
 public interface ICategoryDomainService
 {
-    bool IsExistsSlug(string slug);
+    bool IsSlugExists(string slug);
 }

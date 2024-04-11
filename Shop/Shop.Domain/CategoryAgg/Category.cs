@@ -57,7 +57,7 @@ public class Category:AggregateRoot
         NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
         
         if (slug!=Slug)
-            if (domainService.IsExistsSlug(slug))
+            if (domainService.IsSlugExists(slug))
                 throw new SlugIsDuplicatedException();
         
     }

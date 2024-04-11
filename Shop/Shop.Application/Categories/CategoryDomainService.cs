@@ -12,8 +12,8 @@ public class CategoryDomainService:ICategoryDomainService
         _repository = repository;
     }
 
-    public bool IsExistsSlug(string slug)
+    public bool IsSlugExists(string slug)
     {
-        throw new NotImplementedException();
+       return _repository.Exists(x => x.Slug == slug);
     }
 }

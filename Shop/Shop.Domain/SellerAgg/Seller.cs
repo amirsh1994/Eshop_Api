@@ -24,7 +24,8 @@ public class Seller : AggregateRoot
         NationalCode = nationalCode;
         Inventories = new List<SellerInventory>();
         if (domainService.CheckSellerInfo(this) == false)
-            throw new InvalidDomainDataException("اظلاعات نامعتبر هست ....");
+            throw new InvalidDomainDataException("// اظلاعات نامعتبر هست ....");
+        //
     }
 
     private Seller()

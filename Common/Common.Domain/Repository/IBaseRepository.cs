@@ -30,8 +30,11 @@ public interface IBaseRepository<T> where T : BaseEntity
 public interface IMongodbRepository<TEntity> where TEntity : BaseEntity
 {
     Task Delete(Guid id);
+
     Task<TEntity?> GetById(Guid id);
+
     Task Insert(TEntity entity);
+
     Task Update(TEntity entity);
 
 }

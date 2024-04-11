@@ -14,11 +14,11 @@ public class UserDomainService:IUserDomainService
 
     public bool IsEmailExists(string email)
     {
-        throw new NotImplementedException();
+        return _repository.Exists(x => x.Email == email);
     }
 
     public bool IsPhoneNumberExists(string phoneNumber)
     {
-        throw new NotImplementedException();
+        return _repository.Exists(x => x.PhoneNumber == phoneNumber);
     }
 }

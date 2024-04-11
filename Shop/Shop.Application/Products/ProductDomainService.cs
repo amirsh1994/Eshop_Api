@@ -14,6 +14,6 @@ public class ProductDomainService:IProductDomainService
 
     public bool IsSlugExists(string slug)
     {
-        throw new NotImplementedException();
+       return _repository.Exists(x=>x.Slug==slug);
     }
 }
