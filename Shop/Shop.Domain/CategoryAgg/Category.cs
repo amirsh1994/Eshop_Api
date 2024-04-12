@@ -17,7 +17,7 @@ public class Category:AggregateRoot
 
     public long? ParentId { get; private set; }
 
-    public List<Category> Children { get; private set; }
+    public List<Category> Children { get; private set; }=new();
 
     private Category()
     {

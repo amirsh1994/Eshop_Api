@@ -18,7 +18,7 @@ public class Product : AggregateRoot
 
     public long SubCategoryId { get; private set; }
 
-    public long? SecondarySubCategory { get; private set; }//Level 3 
+    public long? SecondarySubCategoryId { get; private set; }
 
     public string Slug { get; private set; }
 
@@ -42,7 +42,7 @@ public class Product : AggregateRoot
         Description = description;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
-        SecondarySubCategory = firstSubCategoryId;
+        SecondarySubCategoryId = firstSubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
         Images = new List<ProductImage>();
@@ -56,7 +56,7 @@ public class Product : AggregateRoot
         Description = description;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
-        SecondarySubCategory = firstSubCategoryId;
+        SecondarySubCategoryId = firstSubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
     }

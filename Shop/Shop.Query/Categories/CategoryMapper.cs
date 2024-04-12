@@ -5,7 +5,7 @@ namespace Shop.Query.Categories;
 
 internal static class CategoryMapper
 {
-    public static CategoryDto Map(this Category? category)
+    public static CategoryDto? Map(this Category? category)
     {
         if (category == null)
             return null;

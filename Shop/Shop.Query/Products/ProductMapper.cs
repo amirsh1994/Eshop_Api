@@ -44,9 +44,9 @@ public static class ProductMapper
             {
                 Id = p.SubCategoryId
             },
-            SecondarySubCategory = p.SecondarySubCategory != null ? new()
+            SecondarySubCategory = p.SecondarySubCategoryId != null ? new()
             {
-                Id = (long)p.SecondarySubCategory
+                Id = (long)p.SecondarySubCategoryId
             } : null,
         };
     }
