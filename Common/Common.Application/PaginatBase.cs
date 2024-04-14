@@ -22,6 +22,14 @@ namespace Common.Application
             EntityCount = entityCount;
             Take = take;
             StartPage = (currentPage - 4 <= 0) ? 1 : currentPage - 4;
+
+           
+
         }
     }
 }
+
+
+
+
+

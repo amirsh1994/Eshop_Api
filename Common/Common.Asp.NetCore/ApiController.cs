@@ -48,9 +48,9 @@ public  class ApiController: ControllerBase
     }
 
 
-    protected ApiResult<TData> QueryResult<TData>(TData result)
+    protected ApiResult<TData?> QueryResult<TData>(TData? result)
     {
-        return new ApiResult<TData>()
+        return new ApiResult<TData?>()
         {
             IsSuccess = true,
             Data =result,

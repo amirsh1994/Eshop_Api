@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace Shop.Application.Products.Create;
 
-public class CreateProductCommand : IBaseCommand
+public class CreateProductCommand : IBaseCommand<long>
+
 {
     public string Title { get; private set; }
 
@@ -37,5 +38,19 @@ public class CreateProductCommand : IBaseCommand
         SeoData = seoData;
         Specifications = specifications;
     }
+    // Add a parameterless constructor for EF Core and DI and fill all properties with default values
+    //public CreateProductCommand()
+    //{
+    //    Title = string.Empty;
+    //    ImageFile = null;
+    //    Description = string.Empty;
+    //    CategoryId = 0;
+    //    SubCategoryId = 0;
+    //    FirstSubCategoryId = 0;
+    //    Slug = string.Empty;
+    //    SeoData = new SeoData("aaaaa", "bbbbb", "ccccc", "ddddd", "ggggggggg", true);
+    //    Specifications = new Dictionary<string, string>();
+    //}
 
+   
 }

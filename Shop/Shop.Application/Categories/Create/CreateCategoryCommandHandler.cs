@@ -24,3 +24,6 @@ public class CreateCategoryCommandHandler : IBaseCommandHandler<CreateCategoryCo
 
     }
 }
+
+
+
