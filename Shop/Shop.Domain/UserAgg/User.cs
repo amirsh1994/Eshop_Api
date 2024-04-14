@@ -111,7 +111,7 @@ public class User : AggregateRoot
     public void Guard(string phoneNumber, string email, IUserDomainService userDomainService)
     {
         NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
-        NullOrEmptyDomainDataException.CheckString(email, nameof(email));
+        //NullOrEmptyDomainDataException.CheckString(email, nameof(email));
         if (phoneNumber.Length != 11)
         {
             throw new InvalidDomainDataException("شماره موبایل 11 رقم می باشد حتما نه کمتر ونه بیشتر ");

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Products\" />
-    <Folder Include="Sellers\Inventories\" />
     <Folder Include="SiteEntiries\Banner\" />
     <Folder Include="SiteEntiries\Slider\" />
     <Folder Include="Users\Addresses\" />
