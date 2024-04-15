@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Common.AspNetCore;
+﻿using Common.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Sellers.AddInventory;
 using Shop.Application.Sellers.Create;

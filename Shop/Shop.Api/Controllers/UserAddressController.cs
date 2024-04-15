@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.ViewModels.Users;

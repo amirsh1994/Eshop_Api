@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
-using Shop.Application.Users.Register;
 using Shop.Presentation.Facade.Users;
 using Shop.Query.Users.DTOs;
 
@@ -54,11 +53,11 @@ public class UserController : ApiController
         return CommandResult(result);
     }
 
-    [HttpPost("register")]
-    public async Task<ApiResult> RegisterUser(RegisterUserCommand command)
-    {
-        var result=await _userFacade.RegisterUser(command);
-        return CommandResult(result);
-    }
+    //[HttpPost("register")]
+    //public async Task<ApiResult> RegisterUser(RegisterUserCommand command)
+    //{
+    //    var result=await _userFacade.RegisterUser(command);
+    //    return CommandResult(result);
+    //}
 }
 

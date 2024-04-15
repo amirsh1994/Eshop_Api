@@ -20,6 +20,7 @@ internal static class UserMapper
             Gender = u.Gender,
             Name = u.Name,
             PhoneNumber = u.PhoneNumber,
+            IsActive = u.IsActive,
             UserRoles = u.UserRoles.Select(x => new UserRoleDto()
             {
                 RoleId = x.RoleId,

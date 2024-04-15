@@ -51,7 +51,7 @@ public class BaseRepository<TEntity>:IBaseRepository<TEntity> where TEntity:Base
 
     public async Task<int> Save()
     {
-       return await Context.SaveChangesAsync();
+        return await Context.SaveChangesAsync();
     }
 
     public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression)

@@ -14,9 +14,9 @@
 
         public TData Data { get; set; }
 
-        public static OperationResult<TData> Success(TData data)
+        public static OperationResult<TData?> Success(TData data)
         {
-            return new OperationResult<TData>()
+            return new OperationResult<TData?>()
             {
                 Status = OperationResultStatus.Success,
                 Message = SuccessMessage,
@@ -32,9 +32,9 @@
                 Data = default(TData),
             };
         }
-        public static OperationResult<TData> Error(string message = ErrorMessage)
+        public static OperationResult<TData?> Error(string message = ErrorMessage)
         {
-            return new OperationResult<TData>()
+            return new OperationResult<TData?>()
             {
                 Status = OperationResultStatus.Error,
                 Title = "مشکلی در عملیات رخ داده",

@@ -20,6 +20,8 @@ public class UserDto : BaseDto
 
     public Gender Gender { get; set; }
 
+    public bool IsActive { get; set; }
+
     public List<UserRoleDto> UserRoles { get; set; } = new();
 
 }

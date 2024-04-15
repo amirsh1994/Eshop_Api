@@ -21,6 +21,8 @@ public class User : AggregateRoot
 
     public string Email { get; private set; }
 
+    public bool IsActive { get; private set; }
+
     public string Password { get; private set; }
 
     public Gender Gender { get; private set; }
@@ -42,6 +44,7 @@ public class User : AggregateRoot
         Password = password;
         Gender = gender;
         AvatarName = "avatar.png";
+        IsActive = true;
     }
 
 
@@ -104,7 +107,7 @@ public class User : AggregateRoot
         UserRoles.AddRange(userRoles);
     }
 
-    public static User RegisterUser( string password, string phoneNumber, IUserDomainService userDomainService)
+    public static User RegisterUser(string password, string phoneNumber, IUserDomainService userDomainService)
     {
         return new User("", "", phoneNumber, null, password, Gender.None, userDomainService);
     }
@@ -113,29 +116,23 @@ public class User : AggregateRoot
         NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
         //NullOrEmptyDomainDataException.CheckString(email, nameof(email));
         if (phoneNumber.Length != 11)
-        {
             throw new InvalidDomainDataException("شماره موبایل 11 رقم می باشد حتما نه کمتر ونه بیشتر ");
-        }
 
-        if (email.IsValidEmail() == false)
-        {
-            throw new InvalidDomainDataException("ایمیل نامعتبر می باشد ");
-        }
+        if (!string.IsNullOrWhiteSpace(email))
+            if (email.IsValidEmail() == false)
+                throw new InvalidDomainDataException("ایمیل نامعتبر می باشد ");
+
 
         if (phoneNumber != PhoneNumber)
-        {
             if (userDomainService.IsPhoneNumberExists(phoneNumber))
-            {
                 throw new InvalidDomainDataException("شماره موبایل تکراری هستش  ");
-            }
-        }
+
+
         if (email != Email)
-        {
             if (userDomainService.IsPhoneNumberExists(email))
-            {
                 throw new InvalidDomainDataException("  ایمیل تکراری هست و قبلا تو دیتابیس وجود داشته ");
-            }
-        }
+
+
     }
 
 }
