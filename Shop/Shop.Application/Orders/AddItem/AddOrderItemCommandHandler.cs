@@ -25,7 +25,7 @@ public class AddOrderItemCommandHandler : IBaseCommandHandler<AddOrderItemComman
             return OperationResult.NotFound();
         }
 
-        if (request.Count < r.Count)
+        if (r.Count < request.Count)
         {
             return OperationResult.Error("تعداد محصول درخواستی بیشتر از تعداد موجود در انبار می باشد ");
         }
