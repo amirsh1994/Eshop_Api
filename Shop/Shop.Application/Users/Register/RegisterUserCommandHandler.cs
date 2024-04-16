@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using Common.Application.SecurityUtil;
 using Shop.Domain.UserAgg;
 using Shop.Domain.UserAgg.Repository;
 using Shop.Domain.UserAgg.Services;
@@ -18,7 +19,7 @@ public class RegisterUserCommandHandler : IBaseCommandHandler<RegisterUserComman
 
     public async Task<OperationResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var user = User.RegisterUser(request.Password, request.PhoneNumber.Value, _service);
+        var user = User.RegisterUser( Sha256Hasher.Hash(request.Password), request.PhoneNumber.Value, _service);
         _repository.Add(user);
         await _repository.Save();
         return OperationResult.Success();
