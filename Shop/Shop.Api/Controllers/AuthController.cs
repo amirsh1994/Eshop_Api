@@ -62,7 +62,7 @@ public class AuthController : ApiController
             IsSuccess = true,
             MetaData = new()
         };
-
+        
 
     }
 
