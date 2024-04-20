@@ -9,7 +9,7 @@ public class User : AggregateRoot
 {
     public string Name { get; private set; }
     public string Family { get; private set; }
-    public string AvatarName { get;  set; }
+    public string AvatarName { get; set; }
     public string PhoneNumber { get; private set; }
     public string Email { get; private set; }
     public bool IsActive { get; set; }
@@ -18,7 +18,7 @@ public class User : AggregateRoot
     public List<UserRole> UserRoles { get; } = new();
     public List<UserAddress> UserAddresses { get; } = new();
     public List<Wallet> Wallets { get; } = new();
-    public List<UserToken> Tokens { get;}=new();
+    public List<UserToken> Tokens { get; } = new();
 
     private User()
     {
@@ -41,7 +41,7 @@ public class User : AggregateRoot
         Wallets = new List<Wallet>();
         UserAddresses = new List<UserAddress>();
     }
-    
+
     public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IUserDomainService userDomainService)
     {
         Guard(phoneNumber, email, userDomainService);
@@ -132,16 +132,25 @@ public class User : AggregateRoot
 
     public void AddToken(string hashJwtToken, string hashRefreshToken, DateTime tokenExpireDate, DateTime refreshTokenExpireDate, string device)
     {
-        var activeTokenCount=Tokens.Count(x=>x.RefreshTokenExpireDate>DateTime.Now);
+        var activeTokenCount = Tokens.Count(x => x.RefreshTokenExpireDate > DateTime.Now);
 
-        if(activeTokenCount == 3)
+        if (activeTokenCount == 3)
             throw new InvalidDomainDataException("استفاده همزمان از 4 دستگاه همزمان برای لاگین کردن وجود ندارد ");
 
         var token = new UserToken(hashJwtToken, hashRefreshToken, tokenExpireDate, refreshTokenExpireDate, device)
-            {
-                UserId = Id
-            };
+        {
+            UserId = Id
+        };
         Tokens.Add(token);
     }
-    
+
+    public void RemoveToken(long tokenId)
+    {
+        var token = Tokens.FirstOrDefault(x => x.Id == tokenId);
+        if (token == null)
+            throw new InvalidDomainDataException("توکنی با این شناسه یافت نشد این خطا در دامین یوزر رخ داده هست");
+        Tokens.Remove(token);
+
+    }
+
 }

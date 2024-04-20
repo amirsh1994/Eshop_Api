@@ -5,11 +5,11 @@ using Common.Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.JwtUtil;
 using Shop.Api.ViewModels.Auth;
-using Shop.Application.Users.AddAddress;
 using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Register;
 using Shop.Presentation.Facade.Users;
 using Shop.Query.Users.DTOs;
+using Shop.Query.Users.RemoveToken;
 using UAParser;
 
 
@@ -62,7 +62,6 @@ public class AuthController : ApiController
 
     }
 
-
     private async Task<OperationResult<LoginResultDto?>> AddTokenAndGenerateJwt(UserDto user)
     {
         var parser = Parser.GetDefault();
@@ -84,7 +83,7 @@ public class AuthController : ApiController
 
         return OperationResult<LoginResultDto?>.Success(new LoginResultDto()
         {
-            Token =token,
+            Token = token,
             RefreshToken = refreshToken
         });
     }
@@ -109,5 +108,35 @@ public class AuthController : ApiController
         var result = await _userFacade.RegisterUser(command);
         return CommandResult(result);
     }
+
+
+    [HttpPost("RefreshToken")]
+
+    public async Task<ApiResult<LoginResultDto?>> RefreshToken(string refreshToken)
+    {
+        var result = await _userFacade.GetUserTokenByHashRefreshToken(refreshToken);
+
+        if (result == null)
+            return CommandResult(OperationResult<LoginResultDto?>.NotFound());
+
+        if (result.TokenExpireDate > DateTime.Now)
+            return CommandResult(OperationResult<LoginResultDto?>.Error("توکن هنوز منقضی نشده است"));
+
+        if (result.RefreshTokenExpireDate < DateTime.Now)
+            return CommandResult(OperationResult<LoginResultDto?>.Error("زمان رفرش توکن به پایین خودش رسیده است"));
+
+        var userDto = await _userFacade.GetUserById(result.UserId);
+
+        if (userDto == null)
+            return CommandResult(OperationResult<LoginResultDto?>.NotFound());
+
+
+        await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.UserId, result.Id));
+        var loginResult = await AddTokenAndGenerateJwt(userDto);
+
+        return CommandResult(loginResult);
+    }
+
+
 }
 

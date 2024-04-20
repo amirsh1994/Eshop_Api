@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using Common.Application.SecurityUtil;
 using MediatR;
 using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Create;
@@ -8,6 +9,8 @@ using Shop.Query.Users.DTOs;
 using Shop.Query.Users.GetByFilter;
 using Shop.Query.Users.GetById;
 using Shop.Query.Users.GetByPhoneNumber;
+using Shop.Query.Users.RemoveToken;
+using Shop.Query.Users.UserTokens;
 
 namespace Shop.Presentation.Facade.Users;
 
@@ -30,6 +33,11 @@ public class UserFacade : IUserFacade
         return _mediator.Send(command);
     }
 
+    public Task<OperationResult> RemoveToken(RemoveUserTokenCommand command)
+    {
+        return _mediator.Send(command);
+    }
+
     public async Task<OperationResult> EditUser(EditUserCommand command)
     {
         return await _mediator.Send(command);
@@ -38,6 +46,12 @@ public class UserFacade : IUserFacade
     public async Task<UserDto?> GetUserById(long userId)
     {
         return await _mediator.Send(new GetUserByIdQuery(userId));
+    }
+
+    public Task<UserTokenDto?> GetUserTokenByHashRefreshToken(string refreshToken)
+    {
+       var hashRefreshToken=Sha256Hasher.Hash(refreshToken);
+       return _mediator.Send(new GetUserTokenByRefreshTokenQuery(hashRefreshToken));
     }
 
     public async Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams)
