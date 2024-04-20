@@ -2,6 +2,8 @@
 using Common.Application.SecurityUtil;
 using Common.AspNetCore;
 using Common.Domain.ValueObjects;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.JwtUtil;
 using Shop.Api.ViewModels.Auth;
@@ -62,6 +64,8 @@ public class AuthController : ApiController
 
     }
 
+    #region  AddTokenAndGenerateJwt
+
     private async Task<OperationResult<LoginResultDto?>> AddTokenAndGenerateJwt(UserDto user)
     {
         var parser = Parser.GetDefault();
@@ -87,6 +91,9 @@ public class AuthController : ApiController
             RefreshToken = refreshToken
         });
     }
+
+    #endregion
+
 
 
     [HttpPost("register")]
@@ -138,5 +145,22 @@ public class AuthController : ApiController
     }
 
 
+    [HttpDelete("logout")]
+    [Authorize]
+    public async Task<ApiResult> Logout()
+    {
+        var token = await this.HttpContext.GetTokenAsync("access_token");
+
+        if (token == null)
+            return CommandResult(OperationResult.NotFound());
+
+        var result = await _userFacade.GetUserTokenByJwtToken(token);
+        if (result == null)
+            return CommandResult(OperationResult.NotFound());
+
+        await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.UserId, result.Id));
+
+        return CommandResult(OperationResult.Success());
+    }
 }
 

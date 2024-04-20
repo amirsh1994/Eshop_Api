@@ -26,5 +26,7 @@ public interface IUserFacade
 
     Task<UserTokenDto?> GetUserTokenByHashRefreshToken(string refreshToken);
 
+    Task<UserTokenDto?> GetUserTokenByJwtToken(string jwtToken);
+
     Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams);
 }
