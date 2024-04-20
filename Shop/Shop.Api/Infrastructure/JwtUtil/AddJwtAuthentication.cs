@@ -6,8 +6,10 @@ namespace Shop.Api.Infrastructure.JwtUtil;
 
 public static class AddJwtAuthentication
 {
+
     public static void JwtAuthenticationConfig(this IServiceCollection service, IConfiguration configuration)
     {
+        //logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
         service.AddAuthentication(option =>
         {
             option.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -27,6 +29,15 @@ public static class AddJwtAuthentication
                 ValidateAudience = true,
             };
             option.SaveToken = true;//اگه این برابر با ترو باشه میتونیم توکن یوزر رو از httpcontext  دریافتش کنیم
+            option.Events = new JwtBearerEvents()
+            {
+                OnTokenValidated = async context =>
+                {
+                    var customValidate = context.HttpContext.RequestServices.GetRequiredService<CustomJwtValidation>();
+                    await customValidate.Validate(context);
+                },
+
+            };
         });
     }
 

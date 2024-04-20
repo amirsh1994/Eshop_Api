@@ -60,7 +60,8 @@ public class AuthController : ApiController
             return CommandResult(OperationResult<LoginResultDto>.Error("حساب کاربری شما غیر فعال هست"));
 
         var loginResult = await AddTokenAndGenerateJwt(user);
-        return CommandResult<LoginResultDto>(loginResult);
+        return CommandResult(loginResult);
+
 
     }
 
