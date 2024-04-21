@@ -1,14 +1,18 @@
 ﻿using Common.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
 using Shop.Application.Products.RemoveImage;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Api.Controllers;
 
+[PermissionChecker(Permission.CrudeProduct)]
 public class ProductController : ApiController
 {
     private readonly IProductFacade _productFacade;
@@ -17,7 +21,7 @@ public class ProductController : ApiController
     {
         _productFacade = productFacade;
     }
-
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ApiResult<ProductFilterResult?>> GetProductByFilter([FromQuery] ProductFilterParams filterParams)//باید از کوری دریافت بشه  بصورت پیشفرض میره از بادی دریافتش میکنه اگه همینطوری یه ابجکت بهش پاس بدیم
     {
@@ -27,13 +31,13 @@ public class ProductController : ApiController
 
 
     [HttpGet("{productId:long}")]
-
     public async Task<ApiResult<ProductDto?>> GetProductById(long productId)
     {
         var result = await _productFacade.GetProductById(productId);
         return QueryResult<ProductDto>(result);
     }
 
+    [AllowAnonymous]
     [HttpGet("{slug}")]
     public async Task<ApiResult<ProductDto?>> GetProductBySlug(string slug)
     {

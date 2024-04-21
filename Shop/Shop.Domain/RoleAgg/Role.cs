@@ -6,7 +6,6 @@ namespace Shop.Domain.RoleAgg;
 public class Role:AggregateRoot
 {
     public string Title { get;private set; }
-
     public List<RolePermission> Permissions { get; private set; }
 
     public Role(string title, List<RolePermission> permissions)
