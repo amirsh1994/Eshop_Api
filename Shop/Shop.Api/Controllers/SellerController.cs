@@ -1,4 +1,5 @@
-﻿using Common.AspNetCore;
+﻿using Common.Application;
+using Common.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
@@ -29,6 +30,15 @@ public class SellerController : ApiController
     public async Task<ApiResult<SellerFilterResult>> GetSellers([FromQuery] SellerFilterParams filterParams)
     {
         var result = await _sellerFacade.GetSellersByFilter(filterParams);
+        return QueryResult(result);
+    }
+
+
+    [Authorize]
+    [HttpGet("current")]
+    public async Task<ApiResult<SellerDto?>> GetSellerByUserId()
+    {
+        var result = await _sellerFacade.GetSellerByUserId(User.GetUserId());
         return QueryResult(result);
     }
 
@@ -78,6 +88,41 @@ public class SellerController : ApiController
         return CommandResult(result);
 
     }
+
+
+
+    [PermissionChecker(Permission.Seller_Panel)] //باید دسترسی به پنل فروشنده رو داشته باشه تا بتونه لیست  موجودی هاشو دریافت کنه
+    [HttpGet("Inventory")]
+    public async Task<ApiResult<List<InventoryDto>>> GetInventories()
+    {
+        var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
+        if (seller == null)
+            return QueryResult(new List<InventoryDto>());
+        var result = await _sellerInventoryFacade.GetList(seller.Id);
+        return QueryResult(result);
+    }
+
+
+
+
+    [Authorize]
+    [PermissionChecker(Permission.Seller_Panel)] //باید دسترسی به پنل فروشنده رو داشته باشه تا بتونه لیست  موجودی هاشو دریافت کنه
+    [HttpGet("Inventory/{inventoryId}")]
+    public async Task<ApiResult<InventoryDto>> GetInventory(long inventoryId)
+    {
+        var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
+        if (seller == null)
+            return QueryResult(new InventoryDto());
+
+        var result = await _sellerInventoryFacade.GetById(inventoryId);
+
+        if (result == null || result.sellerId != seller.Id)//اینجا میخواد مطمیین بشیم که همین کسی که لاگین شده و دسترسی به موجودی رو میخواد واقعا همون کسی هست که توی دیتابیس فروشنده واقعی همین اینونتوری هستش
+            return QueryResult(new InventoryDto());
+
+        return QueryResult(result);
+    }
+
+
 
 
 

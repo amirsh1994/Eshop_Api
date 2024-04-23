@@ -13,7 +13,7 @@ public static class DependencyRegister
             option.AddPolicy(name:"ShopApi",
                 policy =>
             {
-                policy.AllowAnyOrigin().AllowAnyMethod();
+                policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
         });
 

@@ -7,7 +7,7 @@ namespace Shop.Query.Sellers
     {
 
         //create mapper for mapping seller to sellerDto
-        public static SellerDto Map(this Seller seller)
+        public static SellerDto? Map(this Seller? seller)
         {
             //check for null
             if(seller== null)

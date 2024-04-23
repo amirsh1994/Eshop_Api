@@ -10,6 +10,7 @@
     <Folder Include="Categories\GetByParentId\" />
     <Folder Include="Roles\DTOs\" />
     <Folder Include="Sellers\GetById\" />
+    <Folder Include="Sellers\Inventories\GetList\" />
     <Folder Include="SiteEntities\Banners\GetList\" />
     <Folder Include="SiteEntities\DTOs\" />
     <Folder Include="Users\Addresses\GetById\" />

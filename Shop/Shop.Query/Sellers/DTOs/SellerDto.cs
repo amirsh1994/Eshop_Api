@@ -30,5 +30,3 @@ public class SellerFilterResult:BaseFilter<SellerDto,SellerFilterParams>
 {
 
 }
-
-

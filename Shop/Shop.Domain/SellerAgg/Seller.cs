@@ -8,17 +8,22 @@ namespace Shop.Domain.SellerAgg;
 public class Seller : AggregateRoot
 {
     public long UserId { get; private set; }
+
     public string ShopName { get; private set; }
+
     public string NationalCode { get; private set; }
+
     public SellerStatus Status { get; private set; }
+
     public List<SellerInventory> Inventories { get; private set; }//مئجودی کل فروشنده می باشد 
+
     public DateTime? LastUpdate { get; private set; }
 
 
 
-    public Seller(long userId, string shopName, string nationalCode,ISellerDomainService domainService)
+    public Seller(long userId, string shopName, string nationalCode, ISellerDomainService domainService)
     {
-        Guard(shopName,nationalCode);
+        Guard(shopName, nationalCode);
         UserId = userId;
         ShopName = shopName;
         NationalCode = nationalCode;
@@ -30,7 +35,7 @@ public class Seller : AggregateRoot
 
     private Seller()
     {
-            
+
     }
 
     public void ChangeStatus(SellerStatus status)
@@ -42,7 +47,7 @@ public class Seller : AggregateRoot
     public void Edit(string shopName, string nationalCode, ISellerDomainService domainService)
     {
         Guard(shopName, nationalCode);
-        if(nationalCode!=NationalCode)//یعنی اینکه کد ملی رو تغییر داده 
+        if (nationalCode != NationalCode)//یعنی اینکه کد ملی رو تغییر داده 
             if (domainService.NationalCodeExistsInDataBase(nationalCode))
                 throw new InvalidDomainDataException("کد ملی متعلق به شخص دیگری هست....");
         this.NationalCode = nationalCode;
@@ -51,22 +56,22 @@ public class Seller : AggregateRoot
 
     public void AddInventory(SellerInventory inventory)
     {
-        if (Inventories.Any(x=>x.ProductId==inventory.ProductId))
+        if (Inventories.Any(x => x.ProductId == inventory.ProductId))
         {
             throw new InvalidDomainDataException("در این موجودی قبلا محصولی با ایدی که وارد کردید ثبت شده است");
         }
         Inventories.Add(inventory);
     }
 
-    public void EditInventory(long newInventoryId,int count,int price,int ? discount)
+    public void EditInventory(long newInventoryId, int count, int price, int? discount)
     {
         var oldInventory = Inventories.FirstOrDefault(x => x.Id == newInventoryId);
-        if (oldInventory==null)
+        if (oldInventory == null)
         {
             throw new NullOrEmptyDomainDataException("همچین موجودی با ایدی یافت نشد ");
         }
         //Todo Check Inventories
-        oldInventory.Edit(count,price,discount);
+        oldInventory.Edit(count, price, discount);
     }
 
     //public void DeleteInventory(long inventoryId)
