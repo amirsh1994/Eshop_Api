@@ -61,6 +61,8 @@ public class Seller : AggregateRoot
             throw new InvalidDomainDataException("در این موجودی قبلا محصولی با ایدی که وارد کردید ثبت شده است");
         }
         Inventories.Add(inventory);
+        
+
     }
 
     public void EditInventory(long newInventoryId, int count, int price, int? discount)

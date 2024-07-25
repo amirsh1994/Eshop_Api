@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Categories\GetByParentId\" />
+    <Folder Include="Products\GetForShop\" />
     <Folder Include="Roles\DTOs\" />
     <Folder Include="Sellers\GetById\" />
     <Folder Include="Sellers\Inventories\GetList\" />

@@ -23,11 +23,21 @@ public class ProductController : ApiController
     }
     [AllowAnonymous]
     [HttpGet]
+
     public async Task<ApiResult<ProductFilterResult?>> GetProductByFilter([FromQuery] ProductFilterParams filterParams)//باید از کوری دریافت بشه  بصورت پیشفرض میره از بادی دریافتش میکنه اگه همینطوری یه ابجکت بهش پاس بدیم
     {
-        var result=await _productFacade.GetProductsByFilter(filterParams);//
-        return QueryResult<ProductFilterResult>(result);
+        var result = await _productFacade.GetProductsByFilter(filterParams);//
+        return QueryResult<ProductFilterResult?>(result);
     }
+
+
+    [AllowAnonymous]
+    [HttpGet("Shop")]
+    public async Task<ApiResult<ProductShopResult>> GetProductForShopFilter([FromQuery] ProductShopFilterParam filterParams)
+    {
+        return QueryResult(await _productFacade.GetProductForShop(filterParams));
+    }
+
 
 
     [HttpGet("{productId:long}")]
@@ -38,7 +48,7 @@ public class ProductController : ApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("{slug}")]
+    [HttpGet("bySlug/{slug}")]
     public async Task<ApiResult<ProductDto?>> GetProductBySlug(string slug)
     {
         var result = await _productFacade.GetProductBySlug(slug);
@@ -47,7 +57,7 @@ public class ProductController : ApiController
 
 
     [HttpPost]
-    public async Task<ApiResult<long>> CreateProduct([FromForm]CreateProductCommand command)
+    public async Task<ApiResult<long>> CreateProduct([FromForm] CreateProductCommand command)
     {
         var result = await _productFacade.CreateProduct(command);
 
@@ -66,14 +76,14 @@ public class ProductController : ApiController
     [HttpDelete("images")]
     public async Task<ApiResult> RemoveImage(RemoveProductImageCommand command)
     {
-        var result=await _productFacade.RemoveImage(command);
+        var result = await _productFacade.RemoveImage(command);
         return CommandResult(result);
     }
 
     [HttpPut]
-    public async Task<ApiResult> EditProduct([FromForm]EditProductCommand command)
+    public async Task<ApiResult> EditProduct([FromForm] EditProductCommand command)
     {
-        var result=await _productFacade.EditProduct(command);
+        var result = await _productFacade.EditProduct(command);
         return CommandResult(result);
     }
 }

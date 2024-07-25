@@ -86,10 +86,11 @@ public class OrderController : ApiController
 
 
 
-    [HttpDelete("OrderItem")]
-    public async Task<ApiResult> RemoveOrderItem(RemoveOrderItemCommand command)
+    [HttpDelete("OrderItem/{itemId:long}")]
+    public async Task<ApiResult> RemoveOrderItem(long itemId )
     {
-        var result=await _orderFacade.RemoveOrderItem(command);
+        var userId = User.GetUserId();
+        var result=await _orderFacade.RemoveOrderItem(new RemoveOrderItemCommand(userId, itemId));
         return CommandResult(result);
     }
 

@@ -8,8 +8,12 @@ namespace Shop.Presentation.Facade.SiteEntiries.Banner;
 public interface IBannerFacade
 {
     Task<OperationResult> CreateBanner(CreateBannerCommand command);
+
     Task<OperationResult> EditBanner(EditBannerCommand command);
 
+    Task<OperationResult> DeleteBanner(long bannerId);
+
     Task<BannerDto?> GetBannerById(long id);
+
     Task<List<BannerDto>> GetBanners();
 }

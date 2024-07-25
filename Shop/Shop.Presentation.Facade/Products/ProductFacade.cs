@@ -8,6 +8,7 @@ using Shop.Query.Products.DTOs;
 using Shop.Query.Products.GetByFilter;
 using Shop.Query.Products.GetById;
 using Shop.Query.Products.GetBySlug;
+using Shop.Query.Products.GetForShop;
 
 namespace Shop.Presentation.Facade.Products;
 
@@ -48,8 +49,13 @@ public class ProductFacade:IProductFacade
     {
         return await _mediator.Send(new GetProductBySlugQuery(slug));
     }
-    public async Task<ProductFilterResult> GetProductsByFilter(ProductFilterParams filterParams)
+    public async Task<ProductFilterResult?> GetProductsByFilter(ProductFilterParams filterParams)
     {
         return await _mediator.Send(new GetProductByFilterQuery(filterParams));
+    }
+
+    public async Task<ProductShopResult> GetProductForShop(ProductShopFilterParam filterParam)
+    {
+        return await _mediator.Send(new GetProductForShopQuery(filterParam));
     }
 }

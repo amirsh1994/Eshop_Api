@@ -70,8 +70,14 @@ public class AuthController : ApiController
     private async Task<OperationResult<LoginResultDto?>> AddTokenAndGenerateJwt(UserDto user)
     {
         var parser = Parser.GetDefault();
-        var info = parser.Parse(HttpContext.Request.Headers["User-Agent"]);
-        var device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major} {info.OS.Minor} -{info.UA.Family}";
+        var header = HttpContext.Request.Headers["User-Agent"].ToString();
+        var device = "windows";
+        if (header!=null)
+        {
+            var info = parser.Parse(header);
+             device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major} {info.OS.Minor} -{info.UA.Family}";
+        }
+        
 
 
         var token = JwtTokenBuilder.BuildToken(user, _configuration);

@@ -28,7 +28,7 @@ public class PermissionChecker : AuthorizeAttribute, IAsyncAuthorizationFilter
         _userFacade = context.HttpContext.RequestServices.GetRequiredService<IUserFacade>();
         _roleFacade = context.HttpContext.RequestServices.GetRequiredService<IRoleFacade>();
 
-        if (context.HttpContext.User.Identity.IsAuthenticated)//means user has logged in and received token and authenticated
+        if (context.HttpContext.User.Identity != null && context.HttpContext.User.Identity.IsAuthenticated)//means user has logged in and received token and authenticated
         {
             if (await UserHasPermission(context) == false)
             {

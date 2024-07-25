@@ -1,6 +1,4 @@
 ﻿using Common.Application;
-using FluentValidation;
-using FluentValidation.Validators;
 
 namespace Shop.Application.Orders.RemoveItem;
 

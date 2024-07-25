@@ -30,16 +30,16 @@ public class BannerController : ApiController
     }
 
 
-    [HttpGet("{id}")]
-    public async Task<ApiResult<BannerDto?>> GetBannerById(long id)
+    [HttpGet("{bannerId}")]
+    public async Task<ApiResult<BannerDto?>> GetBannerById(long bannerId)
     {
-        var result = await _bannerFacade.GetBannerById(id);
+        var result = await _bannerFacade.GetBannerById(bannerId);
         return QueryResult(result);
     }
 
 
     [HttpPost]
-    public async Task<ApiResult> CreateBanner(CreateBannerCommand command)
+    public async Task<ApiResult> CreateBanner([FromForm]CreateBannerCommand command)
     {
         var result = await _bannerFacade.CreateBanner(command);
         return CommandResult(result);
@@ -47,11 +47,18 @@ public class BannerController : ApiController
 
 
     [HttpPut]
-    public async Task<ApiResult> EditBanner(EditBannerCommand command)
+    public async Task<ApiResult> EditBanner([FromForm]EditBannerCommand command)
     {
         var result = await _bannerFacade.EditBanner(command);
         return CommandResult(result);
 
+    }
+
+    [HttpDelete("{bannerId}")]
+    public async Task<ApiResult> Delete(long bannerId)
+    {
+        var result = await _bannerFacade.DeleteBanner(bannerId);
+        return CommandResult(result);
     }
 }
 
