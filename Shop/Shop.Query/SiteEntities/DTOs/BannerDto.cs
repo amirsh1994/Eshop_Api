@@ -24,3 +24,9 @@ public class SliderDto:BaseDto
     public string ImageName { get; set; }
 
 }
+
+public class ShippingMethodDto : BaseDto
+{
+    public string Title { get; set; }
+    public int Cost { get; set; }
+}

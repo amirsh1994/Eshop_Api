@@ -39,7 +39,7 @@ public class SliderController : ApiController
 
 
     [HttpPost]
-    public async Task<ApiResult> CreateSlider(CreateSliderCommand command)
+    public async Task<ApiResult> CreateSlider([FromForm] CreateSliderCommand command)
     {
         var result = await _sliderFacade.CreateSlider(command);
         return CommandResult(result);
@@ -49,9 +49,16 @@ public class SliderController : ApiController
 
 
     [HttpPut]
-    public async Task<ApiResult> EditSlider(EditSliderCommand command)
+    public async Task<ApiResult> EditSlider([FromForm] EditSliderCommand command)
     {
         var result = await _sliderFacade.EditSlider(command);
+        return CommandResult(result);
+    }
+
+    [HttpDelete("{sliderId:long}")]
+    public async Task<ApiResult> DeleteSlider(long sliderId)
+    {
+        var result = await _sliderFacade.DeleteSlider(sliderId);
         return CommandResult(result);
     }
 

@@ -22,6 +22,8 @@ public class CommentController : ApiController
         _commentFacade = commentFacade;
     }
 
+
+
     [PermissionChecker(Permission.Comment_Management)]
     [HttpGet]
     public async Task<ApiResult<CommentFilterResult?>> GetCommentByFilter([FromQuery] CommentFilterParam filterParam)
@@ -30,14 +32,16 @@ public class CommentController : ApiController
 
         return QueryResult<CommentFilterResult>(result);
     }
+
+
     [PermissionChecker(Permission.Comment_Management)]//فقط ادمین میتونه بگیره
     [HttpGet("{commentId}")]
-
     public async Task<ApiResult<CommentDto?>> GetCommentById(long commentId)
     {
         var result = await _commentFacade.GetCommentById(commentId);
         return QueryResult<CommentDto>(result);
     }
+
 
     [HttpPost]
     [Authorize]
@@ -47,6 +51,7 @@ public class CommentController : ApiController
         return CommandResult(result);
     }
 
+
     [HttpPut]
     [Authorize]
     public async Task<ApiResult> UpdateComment(EditCommentCommand command)
@@ -54,9 +59,11 @@ public class CommentController : ApiController
         var result = await _commentFacade.EditComment(command);
         return CommandResult(result);
     }
+
+
     [PermissionChecker(Permission.Comment_Management)]
     [HttpPut(" ChangeStatus")]
-    public async Task<ApiResult> ChangeCommentStatus([FromForm]ChangeCommentStatusCommand command)
+    public async Task<ApiResult> ChangeCommentStatus(ChangeCommentStatusCommand command)
     {
         var result = await _commentFacade.ChangeStatus(command);
         return CommandResult(result);

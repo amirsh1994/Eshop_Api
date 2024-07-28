@@ -1,25 +1,31 @@
 ﻿using Common.Query;
 using Microsoft.EntityFrameworkCore;
+using Shop.Domain.OrderAgg.Enums;
 using Shop.Infrastructure;
 using Shop.Infrastructure.Persistent.Dapper;
 using Shop.Query.Orders.DTOs;
 
-namespace Shop.Query.Orders.GetById;
+namespace Shop.Query.Orders.GetByUserId;
 
-public class GetOrderByIdQueryHandler : IBaseQueryHandler<GetOrderByIdQuery, OrderDto?>
+public record GetCurrentOrderByUserIdQuery(long UserId) : IBaseQuery<OrderDto?>;
+
+
+
+
+public class GetCurrentOrderByUserIdQueryHandler:IBaseQueryHandler<GetCurrentOrderByUserIdQuery,OrderDto>
 {
     private readonly ShopContext _context;
     private readonly DapperContext _dapperContext;
 
-    public GetOrderByIdQueryHandler(ShopContext context, DapperContext dapperContext)
+    public GetCurrentOrderByUserIdQueryHandler(ShopContext context, DapperContext dapperContext)
     {
         _context = context;
         _dapperContext = dapperContext;
     }
 
-    public async Task<OrderDto?> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OrderDto?> Handle(GetCurrentOrderByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == request.OrderId, cancellationToken);
+        var order = await _context.Orders.FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Status==OrderStatus.Pending, cancellationToken);
         if (order == null)
         {
             return null;
@@ -31,6 +37,8 @@ public class GetOrderByIdQueryHandler : IBaseQueryHandler<GetOrderByIdQuery, Ord
             .FirstAsync(cancellationToken);
         orderDto.Items = await orderDto.GetOrderItem(_dapperContext);
         return orderDto;
-
     }
 }
+
+
+

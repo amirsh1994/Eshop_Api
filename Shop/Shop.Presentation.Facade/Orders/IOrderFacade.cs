@@ -23,4 +23,6 @@ public interface IOrderFacade
     Task<OrderDto?> GetOrderById(long orderId);
 
     Task<OrderFilterResult> GetOrdersByFilter(OrderFilterParams filterParams);
+
+    Task<OrderDto?> GetCurrentOrderByUserId(long userId);
 }
