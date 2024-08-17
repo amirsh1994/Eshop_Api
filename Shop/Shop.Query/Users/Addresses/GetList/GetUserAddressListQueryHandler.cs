@@ -21,7 +21,7 @@ internal class GetUserAddressListQueryHandler:IBaseQueryHandler<GetUserAddressLi
 
         using var connection = _dapperContext.CreateConnection();
 
-        var result = await connection.QueryAsync<AddressDto>(sql, new { id = request.UserId });
+        var result = await connection.QueryAsync<AddressDto>(sql, new { UserId = request.UserId });
 
         return result.ToList();
     }

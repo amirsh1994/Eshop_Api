@@ -29,7 +29,7 @@ namespace Shop.Api.Controllers
         public async Task<ApiResult<List<CategoryDto>>> GetCategories()
         {
             var results = await _categoryFacade.GetCategories();
-            return QueryResult<List<CategoryDto>>(results);
+            return QueryResult(results);
 
         }
 

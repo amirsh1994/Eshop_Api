@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
+using Shop.Api.ViewModels.Sliders;
 using Shop.Application.SiteEntities.Sliders.Create;
 using Shop.Application.SiteEntities.Sliders.Edit;
 using Shop.Domain.RoleAgg.Enums;
@@ -39,8 +40,9 @@ public class SliderController : ApiController
 
 
     [HttpPost]
-    public async Task<ApiResult> CreateSlider([FromForm] CreateSliderCommand command)
+    public async Task<ApiResult> CreateSlider([FromForm] AddSliderViewModel viewModel)
     {
+        var command = new CreateSliderCommand(viewModel.Title, viewModel.Link, viewModel.ImageFileName);
         var result = await _sliderFacade.CreateSlider(command);
         return CommandResult(result);
 
@@ -49,8 +51,9 @@ public class SliderController : ApiController
 
 
     [HttpPut]
-    public async Task<ApiResult> EditSlider([FromForm] EditSliderCommand command)
+    public async Task<ApiResult> EditSlider([FromForm] EditSliderViewModel viewModel)
     {
+        var command = new EditSliderCommand(viewModel.Id, viewModel.Title, viewModel.Link, viewModel.ImageFileName);
         var result = await _sliderFacade.EditSlider(command);
         return CommandResult(result);
     }

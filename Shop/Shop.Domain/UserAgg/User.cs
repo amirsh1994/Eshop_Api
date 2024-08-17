@@ -8,16 +8,27 @@ namespace Shop.Domain.UserAgg;
 public class User : AggregateRoot
 {
     public string Name { get; private set; }
+
     public string Family { get; private set; }
+
     public string AvatarName { get; set; }
+
     public string PhoneNumber { get; private set; }
+
     public string Email { get; private set; }
+
     public bool IsActive { get; set; }
+
     public string Password { get; private set; }
+
     public Gender Gender { get; private set; }
+
     public List<UserRole> UserRoles { get; } = new();
+
     public List<UserAddress> UserAddresses { get; } = new();
+
     public List<Wallet> Wallets { get; } = new();
+
     public List<UserToken> Tokens { get; } = new();
 
     private User()
@@ -134,8 +145,8 @@ public class User : AggregateRoot
     {
         var activeTokenCount = Tokens.Count(x => x.RefreshTokenExpireDate > DateTime.Now);
 
-        if (activeTokenCount == 3)
-            throw new InvalidDomainDataException("استفاده همزمان از 4 دستگاه همزمان برای لاگین کردن وجود ندارد ");
+        if (activeTokenCount == 22)
+            throw new InvalidDomainDataException("استفاده همزمان از 23 دستگاه همزمان برای لاگین کردن وجود ندارد ");
 
         var token = new UserToken(hashJwtToken, hashRefreshToken, tokenExpireDate, refreshTokenExpireDate, device)
         {
@@ -151,6 +162,26 @@ public class User : AggregateRoot
             throw new InvalidDomainDataException("توکنی با این شناسه یافت نشد این خطا در دامین یوزر رخ داده هست");
         Tokens.Remove(token);
 
+    }
+
+    public void ChangePassword(string newHashedPassword)
+    {
+        NullOrEmptyDomainDataException.CheckString(newHashedPassword, nameof(newHashedPassword));
+        Password = newHashedPassword;
+    }
+
+    public void SetActiveAddress(long addressId)
+    {
+        var currentAddress = this.UserAddresses.FirstOrDefault(x => x.Id == addressId);
+
+        if (currentAddress == null)
+            throw new NullOrEmptyDomainDataException("Address Not Found...");
+
+        UserAddresses.ForEach(x =>
+        {
+            x.SetDeActive();
+        });
+        currentAddress.SetActive();
     }
 
 }

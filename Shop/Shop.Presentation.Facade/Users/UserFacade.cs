@@ -1,6 +1,7 @@
 ﻿using Common.Application;
 using Common.Application.SecurityUtil;
 using MediatR;
+using Shop.Application.ChangePassword;
 using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
@@ -10,7 +11,6 @@ using Shop.Query.Users.GetByFilter;
 using Shop.Query.Users.GetById;
 using Shop.Query.Users.GetByPhoneNumber;
 using Shop.Query.Users.RemoveToken;
-using Shop.Query.Users.UserTokens;
 using Shop.Query.Users.UserTokens.GetByJwtToken;
 using Shop.Query.Users.UserTokens.GetByRefreshToken;
 
@@ -40,6 +40,11 @@ public class UserFacade : IUserFacade
         return _mediator.Send(command);
     }
 
+    public async Task<OperationResult> ChangeUserPassword(ChangeUserPasswordCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
     public async Task<OperationResult> EditUser(EditUserCommand command)
     {
         return await _mediator.Send(command);
@@ -52,8 +57,8 @@ public class UserFacade : IUserFacade
 
     public Task<UserTokenDto?> GetUserTokenByHashRefreshToken(string refreshToken)
     {
-       var hashRefreshToken=Sha256Hasher.Hash(refreshToken);
-       return _mediator.Send(new GetUserTokenByRefreshTokenQuery(hashRefreshToken));
+        var hashRefreshToken = Sha256Hasher.Hash(refreshToken);
+        return _mediator.Send(new GetUserTokenByRefreshTokenQuery(hashRefreshToken));
     }
 
     public Task<UserTokenDto?> GetUserTokenByJwtToken(string jwtToken)

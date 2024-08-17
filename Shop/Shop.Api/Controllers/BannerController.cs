@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
+using Shop.Api.ViewModels.Banners;
 using Shop.Application.SiteEntities.Banners.Create;
 using Shop.Application.SiteEntities.Banners.Edit;
 using Shop.Domain.RoleAgg.Enums;
@@ -39,16 +40,18 @@ public class BannerController : ApiController
 
 
     [HttpPost]
-    public async Task<ApiResult> CreateBanner([FromForm]CreateBannerCommand command)
+    public async Task<ApiResult> CreateBanner([FromForm]CreateBannerViewModel model)
     {
+        var command = new CreateBannerCommand(model.Link, model.ImageFile, model.Positions);
         var result = await _bannerFacade.CreateBanner(command);
         return CommandResult(result);
     }
 
 
     [HttpPut]
-    public async Task<ApiResult> EditBanner([FromForm]EditBannerCommand command)
+    public async Task<ApiResult> EditBanner([FromForm]EditBannerViewModel model)
     {
+        var command = new EditBannerCommand(model.Link, model.ImageFile, model.Positions,model.BannerId);
         var result = await _bannerFacade.EditBanner(command);
         return CommandResult(result);
 

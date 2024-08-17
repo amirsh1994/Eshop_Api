@@ -20,7 +20,7 @@ public class GetProductByFilterQueryHandler : IBaseQueryHandler<GetProductByFilt
 
         var result = _context.Products.OrderByDescending(x => x.Id).AsQueryable();
         if (string.IsNullOrWhiteSpace(@params.Slug) == false)
-            result = result.Where(x => x.Slug == @params.Slug);
+            result = result.Where(x => x.Slug.StartsWith(@params.Slug));
 
         if (string.IsNullOrWhiteSpace(@params.Title) == false)
             result = result.Where(x => x.Title.Contains(@params.Title));

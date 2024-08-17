@@ -8,6 +8,6 @@ public class BaseEntity
 
     public BaseEntity()
     {
-        CreationDate = new DateTime();
+        CreationDate =DateTime.Now;
     }
 }

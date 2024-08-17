@@ -1,5 +1,4 @@
-﻿using Common.Application;
-using Common.AspNetCore;
+﻿using Common.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;

@@ -8,7 +8,7 @@ namespace Shop.Application.Users.EditAddress;
 
 public class EditUserAddressCommand:IBaseCommand
 {
-    public long Id { get;  set; }
+    public long Id { get; private set; }
 
     public long UserId { get;  set; }
 
@@ -28,6 +28,10 @@ public class EditUserAddressCommand:IBaseCommand
 
     public string NationalCode { get; private set; }
 
+    private EditUserAddressCommand()
+    {
+        
+    }
     public EditUserAddressCommand( string shire, string city, string postalCode, 
         string postalAddress, PhoneNumber phoneNumber, string family, string name, string nationalCode, long addressId, long userId)
     {

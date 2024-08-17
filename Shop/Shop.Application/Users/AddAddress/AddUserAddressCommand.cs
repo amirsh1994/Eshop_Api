@@ -23,7 +23,10 @@ public class AddUserAddressCommand : IBaseCommand
 
     public string NationalCode { get; private set; }
 
-
+    private AddUserAddressCommand()
+    {
+        
+    }
 
     public AddUserAddressCommand(long userId, string shire, string city, string postalCode, string postalAddress, PhoneNumber phoneNumber, string family, string nationalCode, string name)
     {

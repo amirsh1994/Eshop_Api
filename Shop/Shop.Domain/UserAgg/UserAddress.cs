@@ -80,4 +80,9 @@ public class UserAddress : BaseEntity
     {
         ActiveAddress = true;
     }
+
+    public void SetDeActive()
+    {
+        ActiveAddress = false;
+    }
 }
