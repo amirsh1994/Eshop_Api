@@ -17,7 +17,7 @@ public class CreateProductCommand : IBaseCommand<long>
 
     public long SubCategoryId { get; private set; }
 
-    public long FirstSubCategoryId { get; private set; }//Level 3 
+    public long? FirstSubCategoryId { get; private set; }//Level 3 
 
     public string Slug { get; private set; }
 

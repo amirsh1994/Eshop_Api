@@ -9,10 +9,13 @@ public class JwtTokenBuilder
 {
     public static string BuildToken(UserDto user, IConfiguration configuration)
     {
+        var roles = user.UserRoles.Select(x => x.RoleTitle);
         var claims = new List<Claim>()
         {
+
             new(ClaimTypes.MobilePhone,user.PhoneNumber),
             new (ClaimTypes.NameIdentifier,user.Id.ToString()),
+            new (ClaimTypes.Role,string.Join("-",roles)),
         };
         var secretKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["JwtConfig:SignInKey"]));
         var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

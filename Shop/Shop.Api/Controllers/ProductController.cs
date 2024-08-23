@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
+using Shop.Api.ViewModels.Products;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
@@ -57,17 +58,19 @@ public class ProductController : ApiController
 
 
     [HttpPost]
-    public async Task<ApiResult<long>> CreateProduct([FromForm] CreateProductCommand command)
+    public async Task<ApiResult<long>> CreateProduct([FromForm] CreateProductViewModel model)
     {
+        var command = new CreateProductCommand(model.Title, model.ImageFile, model.Description,
+            model.CategoryId, model.SubCategoryId, model.FirstSubCategoryId, model.Slug, model.SeoDataViewModel.ToSeoData(), model.GetSpecification());
         var result = await _productFacade.CreateProduct(command);
-
         return CommandResult<long>(result);
     }
 
     [HttpPost("images")]
 
-    public async Task<ApiResult> AddProductImage([FromForm] AddProductImageCommand command)
+    public async Task<ApiResult> AddProductImage([FromForm] AddProductImageViewModel model)
     {
+        var command = new AddProductImageCommand(model.ImageFile, model.ProductId, model.Sequence);
         var result = await _productFacade.AddImage(command);
 
         return CommandResult(result);
@@ -81,8 +84,10 @@ public class ProductController : ApiController
     }
 
     [HttpPut]
-    public async Task<ApiResult> EditProduct([FromForm] EditProductCommand command)
+    public async Task<ApiResult> EditProduct([FromForm] EditProductViewModel model)
     {
+        var command = new EditProductCommand(model.Id, model.Title, model.ImageFile, model.Description,
+            model.CategoryId, model.SubCategoryId, model.FirstSubCategoryId, model.Slug, model.SeoDataViewModel.ToSeoData(), model.GetSpecification());
         var result = await _productFacade.EditProduct(command);
         return CommandResult(result);
     }

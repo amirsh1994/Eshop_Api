@@ -6,6 +6,7 @@ namespace Shop.Domain.RoleAgg;
 public class Role:AggregateRoot
 {
     public string Title { get;private set; }
+
     public List<RolePermission> Permissions { get; private set; }
 
     public Role(string title, List<RolePermission> permissions)
@@ -14,12 +15,14 @@ public class Role:AggregateRoot
         Title = title;
         Permissions = permissions;
     }
+
     public Role(string title)
     {
         NullOrEmptyDomainDataException.CheckString(title, nameof(title));
         Title = title;
         Permissions =new List<RolePermission>();
     }
+
     private Role()
     {
         
