@@ -30,6 +30,10 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(option =>
         return new BadRequestObjectResult(result);
     });
 });
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379";
+});
 
 
 

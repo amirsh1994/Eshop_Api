@@ -9,9 +9,9 @@ using Shop.Api.Infrastructure.JwtUtil;
 using Shop.Api.ViewModels.Auth;
 using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Register;
+using Shop.Application.Users.RemoveToken;
 using Shop.Presentation.Facade.Users;
 using Shop.Query.Users.DTOs;
-using Shop.Query.Users.RemoveToken;
 using UAParser;
 
 

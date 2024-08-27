@@ -4,6 +4,7 @@ using Shop.Application.Sellers.AddInventory;
 using Shop.Application.Sellers.EditInventory;
 using Shop.Query.Sellers.DTOs;
 using Shop.Query.Sellers.Inventories.GetById;
+using Shop.Query.Sellers.Inventories.GetByProductId;
 using Shop.Query.Sellers.Inventories.GetList;
 
 namespace Shop.Presentation.Facade.Sellers.Inventories;
@@ -34,6 +35,11 @@ public class SellerInventoryFacade : ISellerInventoryFacade
 
     public async Task<List<InventoryDto>> GetList(long sellerId)
     {
-     return await _mediator.Send(new GetInventoriesQuery(sellerId));
+        return await _mediator.Send(new GetInventoriesQuery(sellerId));
+    }
+
+    public async Task<List<InventoryDto>> GetInventoriesByProductId(long productId)
+    {
+        return await _mediator.Send(new GetInventoriesByProductId(productId));
     }
 }

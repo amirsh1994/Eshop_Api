@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Config", "Shop\Shop.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.AspNetCore", "Common\Common.Asp.NetCore\Common.AspNetCore.csproj", "{5688CEE8-3CC2-4B26-9CA0-28FA32F9670C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.CacheHelper", "Common\Common.CachHelper\Common.CacheHelper.csproj", "{60FF4E80-7DF7-403F-BD2E-53EA281F9BF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{5688CEE8-3CC2-4B26-9CA0-28FA32F9670C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5688CEE8-3CC2-4B26-9CA0-28FA32F9670C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5688CEE8-3CC2-4B26-9CA0-28FA32F9670C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FF4E80-7DF7-403F-BD2E-53EA281F9BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FF4E80-7DF7-403F-BD2E-53EA281F9BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FF4E80-7DF7-403F-BD2E-53EA281F9BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FF4E80-7DF7-403F-BD2E-53EA281F9BF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{14E672C8-EDF4-4623-A455-A0393BC6B50C} = {AD3474C8-9A10-4A84-8FED-B4751EDBCA83}
 		{8A2F77B1-E5B5-49CE-8F1F-E4A7E13522BB} = {512B7B12-F2D1-4F25-AE1A-0BCE82DE130F}
 		{5688CEE8-3CC2-4B26-9CA0-28FA32F9670C} = {C12C82FE-29F3-420B-97EB-B2A1F7261101}
+		{60FF4E80-7DF7-403F-BD2E-53EA281F9BF1} = {C12C82FE-29F3-420B-97EB-B2A1F7261101}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD5BA1EE-B27C-487C-AD51-3F35B67D33A1}

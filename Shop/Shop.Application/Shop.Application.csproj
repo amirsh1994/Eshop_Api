@@ -16,6 +16,7 @@
     <Folder Include="Users\DeleteAddress\" />
     <Folder Include="Users\Edit\" />
     <Folder Include="Users\AddToken\" />
+    <Folder Include="Users\RemoveToken\" />
     <Folder Include="Users\Register\" />
   </ItemGroup>
 

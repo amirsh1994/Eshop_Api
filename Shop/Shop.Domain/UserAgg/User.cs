@@ -155,13 +155,13 @@ public class User : AggregateRoot
         Tokens.Add(token);
     }
 
-    public void RemoveToken(long tokenId)
+    public string RemoveToken(long tokenId)
     {
         var token = Tokens.FirstOrDefault(x => x.Id == tokenId);
         if (token == null)
             throw new InvalidDomainDataException("توکنی با این شناسه یافت نشد این خطا در دامین یوزر رخ داده هست");
         Tokens.Remove(token);
-
+        return token.HashJwtToken;
     }
 
     public void ChangePassword(string newHashedPassword)

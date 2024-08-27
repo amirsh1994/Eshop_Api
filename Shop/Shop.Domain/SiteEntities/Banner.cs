@@ -42,5 +42,8 @@ public class Banner:BaseEntity
 public enum BannerPositions
 {
     زیر_اسلایدر,
-    سمت_راست_اسلایدر
+    سمت_چپ_اسلایدر,
+    بالای_اسلایدر,
+    سمت_راست_شگفت_انگیز,
+    وسط_صفحه
 }

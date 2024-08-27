@@ -4,8 +4,8 @@ using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
+using Shop.Application.Users.RemoveToken;
 using Shop.Query.Users.DTOs;
-using Shop.Query.Users.RemoveToken;
 
 namespace Shop.Presentation.Facade.Users;
 
