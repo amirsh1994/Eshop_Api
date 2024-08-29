@@ -32,8 +32,6 @@ public class Comment:AggregateRoot
         Status = CommentStatus.Pending;
     }
 
-   
-
     public void Edit(string text)
     {
         NullOrEmptyDomainDataException.CheckString(text, nameof(text));
@@ -46,4 +44,5 @@ public class Comment:AggregateRoot
         this.Status=status;
         UpdateDate=DateTime.Now;
     }
+
 }

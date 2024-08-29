@@ -48,12 +48,21 @@ public class ProductController : ApiController
         return QueryResult<ProductDto>(result);
     }
 
+
     [AllowAnonymous]
     [HttpGet("bySlug/{slug}")]
     public async Task<ApiResult<ProductDto?>> GetProductBySlug(string slug)
     {
         var result = await _productFacade.GetProductBySlug(slug);
         return QueryResult<ProductDto>(result);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("single/{slug}")]
+    public async Task<ApiResult<SingleProductDto?>> GetProductForSinglePage(string slug)
+    {
+        var result = await _productFacade.GetProductForSinglePage(slug);
+        return QueryResult(result);
     }
 
 

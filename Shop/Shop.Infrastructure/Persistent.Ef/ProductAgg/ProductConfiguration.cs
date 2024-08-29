@@ -14,11 +14,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.Title)
             .IsRequired()
-            .HasMaxLength(200);
+            .HasMaxLength(2000);
 
         builder.Property(x => x.Description)
             .IsRequired()
-            .HasMaxLength(400);
+            .HasMaxLength(40000);
 
         builder.Property(x => x.ImageName)
             .IsRequired()

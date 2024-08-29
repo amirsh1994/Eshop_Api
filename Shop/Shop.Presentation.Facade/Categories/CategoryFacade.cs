@@ -26,12 +26,21 @@ internal class CategoryFacade : ICategoryFacade
 
     public async Task<OperationResult<long>> AddChild(AddChildCategoryCommand command)
     {
-        return await _mediator.Send(command);
+        var result = await _mediator.Send(command);
+        if (result.Status == OperationResultStatus.Success)
+            await _distributedCache.RemoveAsync(CacheKeys.Categories);
+        return result;
     }
 
     public async Task<OperationResult> Edit(EditCategoryCommand command)
     {
-        return await _mediator.Send(command);
+        var result= await _mediator.Send(command);
+        if (result.Status==OperationResultStatus.Success)
+        {
+            await _distributedCache.RemoveAsync(CacheKeys.Categories);
+        }
+
+        return result;
     }
 
     public async Task<OperationResult<long>> Create(CreateCategoryCommand command)
@@ -58,7 +67,7 @@ internal class CategoryFacade : ICategoryFacade
     {
         return await _distributedCache.GetOrSet(CacheKeys.Categories, () =>
         {
-            return   _mediator.Send(new GetCategoryListQuery());
+            return _mediator.Send(new GetCategoryListQuery());
         });
     }
 }

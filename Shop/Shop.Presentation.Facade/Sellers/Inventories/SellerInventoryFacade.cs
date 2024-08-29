@@ -40,6 +40,6 @@ public class SellerInventoryFacade : ISellerInventoryFacade
 
     public async Task<List<InventoryDto>> GetInventoriesByProductId(long productId)
     {
-        return await _mediator.Send(new GetInventoriesByProductId(productId));
+        return await _mediator.Send(new GetInventoriesByProductIdQuery(productId));
     }
 }

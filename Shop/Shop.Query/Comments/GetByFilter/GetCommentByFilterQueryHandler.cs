@@ -26,6 +26,9 @@ internal class GetCommentByFilterQueryHandler:IBaseQueryHandler<GetCommentByFilt
         if (@params.UserId != null)
             result = result.Where(x => x.UserId == @params.UserId);
 
+        if (@params.ProductId != null)
+            result = result.Where(x => x.ProductId == @params.ProductId);
+
         if (@params.StartDate != null)
             result = result.Where(x => x.CreationDate >= @params.StartDate.Value.Date);
 
@@ -40,7 +43,6 @@ internal class GetCommentByFilterQueryHandler:IBaseQueryHandler<GetCommentByFilt
         {
             Data =await result.Skip(skip).Take(@params.Take).Select(comment=>comment.MapFilterComment()).ToListAsync(cancellationToken),
             FilterParam = @params
-
         };
         model.GeneratePaging(result,@params.Take,@params.PageId);
         return model;
