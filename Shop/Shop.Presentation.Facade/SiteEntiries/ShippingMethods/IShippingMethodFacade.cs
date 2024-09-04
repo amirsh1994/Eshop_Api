@@ -12,11 +12,13 @@ namespace Shop.Presentation.Facade.SiteEntiries.ShippingMethods;
 public interface IShippingMethodFacade
 {
     Task<OperationResult> Create(CreateShippingMethodCommand command);
+
     Task<OperationResult> Edit(EditShippingMethodCommand command);
+
     Task<OperationResult> Delete(long id);
 
-
     Task<ShippingMethodDto?> GetShippingMethodById(long id);
+
     Task<List<ShippingMethodDto>> GetList();
 }
 

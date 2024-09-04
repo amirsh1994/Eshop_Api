@@ -8,6 +8,11 @@ namespace Shop.Query.Products.DTOs;
 public class ProductShopResult : BaseFilter<ProductShopDto, ProductShopFilterParam>
 {
     public CategoryDto? CategoryDto { get; set; }
+
+    public ProductShopResult()
+    {
+        FilterParam = new ProductShopFilterParam();
+    }
 }
 
 public class ProductShopDto:BaseDto

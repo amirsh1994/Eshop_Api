@@ -1,8 +1,6 @@
-﻿using Common.Application;
-using Common.Query;
+﻿using Common.Query;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure;
-using Shop.Infrastructure.Persistent.Ef;
 using Shop.Query.SiteEntities.DTOs;
 
 namespace Shop.Query.SiteEntities.ShippingMethods.GetById;

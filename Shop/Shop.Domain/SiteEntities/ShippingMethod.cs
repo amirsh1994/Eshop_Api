@@ -3,7 +3,7 @@ using Common.Domain;
 
 namespace Shop.Domain.SiteEntities;
 
-public class ShippingMethod : BaseEntity
+public class ShippingMethod:BaseEntity
 {
     public ShippingMethod(int cost, string title)
     {
@@ -19,5 +19,6 @@ public class ShippingMethod : BaseEntity
         Title = title;
     }
     public string Title { get; private set; }
+
     public int Cost { get; private set; }
 }

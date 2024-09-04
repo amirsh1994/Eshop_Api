@@ -27,7 +27,7 @@ public class ShippingMethodController : ApiController
         return QueryResult(result);
     }
     [HttpGet("{id}")]
-    public async Task<ApiResult<ShippingMethodDto>> GetById(long id)
+    public async Task<ApiResult<ShippingMethodDto?>> GetById(long id)
     {
         var result = await _facade.GetShippingMethodById(id);
         return QueryResult(result);

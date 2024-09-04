@@ -29,11 +29,9 @@ public class Order:AggregateRoot
 
     public OrderDiscount? Discount { get; set; }
 
-    public OrderShippingMethod Methode { get; set; }
+    public OrderShippingMethod?  Methode { get; set; }
 
     public OrderAddress? Address { get; private set; }
-
-
 
     public int TotalPrice
     {
@@ -76,7 +74,6 @@ public class Order:AggregateRoot
             Items.Remove(orderItem);
             //orderItem.DecreaseCount(orderItem.Count);
         }
-
        
     }
 

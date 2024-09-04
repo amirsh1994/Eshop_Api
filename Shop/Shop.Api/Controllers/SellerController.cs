@@ -104,26 +104,22 @@ public class SellerController : ApiController
 
 
 
-    [Authorize]
-    [PermissionChecker(Permission.Seller_Panel)] //باید دسترسی به پنل فروشنده رو داشته باشه تا بتونه لیست  موجودی هاشو دریافت کنه
+    //[Authorize]
+    //[PermissionChecker(Permission.Seller_Panel)] //باید دسترسی به پنل فروشنده رو داشته باشه تا بتونه لیست  موجودی هاشو دریافت کنه
     [HttpGet("Inventory/{inventoryId}")]
     public async Task<ApiResult<InventoryDto>> GetInventory(long inventoryId)
     {
-        var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
-        if (seller == null)
-            return QueryResult(new InventoryDto());
+        //var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
+        //if (seller == null)
+        //    return QueryResult(new InventoryDto());
 
         var result = await _sellerInventoryFacade.GetById(inventoryId);
 
-        if (result == null || result.sellerId != seller.Id)//اینجا میخواد مطمیین بشیم که همین کسی که لاگین شده و دسترسی به موجودی رو میخواد واقعا همون کسی هست که توی دیتابیس فروشنده واقعی همین اینونتوری هستش
+        if (result == null /*|| result.sellerId != seller.Id*/)//اینجا میخواد مطمیین بشیم که همین کسی که لاگین شده و دسترسی به موجودی رو میخواد واقعا همون کسی هست که توی دیتابیس فروشنده واقعی همین اینونتوری هستش
             return QueryResult(new InventoryDto());
 
         return QueryResult(result);
     }
-
-
-
-
 
 }
 

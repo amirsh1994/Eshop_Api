@@ -11,6 +11,7 @@ public class OrderShippingMethod : ValueObject
     }
 
     public string ShippingType { get; private set; }
+
     public int ShippingCost { get; private set; }
 }
 

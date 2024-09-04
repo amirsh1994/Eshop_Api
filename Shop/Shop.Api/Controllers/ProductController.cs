@@ -24,7 +24,6 @@ public class ProductController : ApiController
     }
     [AllowAnonymous]
     [HttpGet]
-
     public async Task<ApiResult<ProductFilterResult?>> GetProductByFilter([FromQuery] ProductFilterParams filterParams)//باید از کوری دریافت بشه  بصورت پیشفرض میره از بادی دریافتش میکنه اگه همینطوری یه ابجکت بهش پاس بدیم
     {
         var result = await _productFacade.GetProductsByFilter(filterParams);//
@@ -36,11 +35,12 @@ public class ProductController : ApiController
     [HttpGet("Shop")]
     public async Task<ApiResult<ProductShopResult>> GetProductForShopFilter([FromQuery] ProductShopFilterParam filterParams)
     {
-        return QueryResult(await _productFacade.GetProductForShop(filterParams));
+        var result = await _productFacade.GetProductForShop(filterParams);
+        return QueryResult<ProductShopResult>(result);
     }
 
 
-
+    [AllowAnonymous]
     [HttpGet("{productId:long}")]
     public async Task<ApiResult<ProductDto?>> GetProductById(long productId)
     {
@@ -76,12 +76,10 @@ public class ProductController : ApiController
     }
 
     [HttpPost("images")]
-
     public async Task<ApiResult> AddProductImage([FromForm] AddProductImageViewModel model)
     {
         var command = new AddProductImageCommand(model.ImageFile, model.ProductId, model.Sequence);
         var result = await _productFacade.AddImage(command);
-
         return CommandResult(result);
     }
 
