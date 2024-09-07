@@ -22,7 +22,9 @@ public class CheckOutOrderCommand:IBaseCommand
 
     public string NationalCode { get;  private set; }
 
-    public CheckOutOrderCommand(long userId, string shire, string city, string postalCode, string postalAddress, string phoneNumber, string family, string nationalCode, string name)
+    public long ShippingMethodeId { get;private set; }
+
+    public CheckOutOrderCommand(long userId, string shire, string city, string postalCode, string postalAddress, string phoneNumber, string family, string nationalCode, string name, long shippingMethodeId)
     {
         UserId = userId;
         Shire = shire;
@@ -33,5 +35,6 @@ public class CheckOutOrderCommand:IBaseCommand
         Family = family;
         NationalCode = nationalCode;
         Name = name;
+        ShippingMethodeId = shippingMethodeId;
     }
 }

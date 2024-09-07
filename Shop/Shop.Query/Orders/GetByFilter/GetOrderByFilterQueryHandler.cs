@@ -1,5 +1,6 @@
 ﻿using Common.Query;
 using Microsoft.EntityFrameworkCore;
+using Shop.Domain.OrderAgg;
 using Shop.Infrastructure;
 using Shop.Query.Orders.DTOs;
 
@@ -31,9 +32,21 @@ internal class GetOrderByFilterQueryHandler:IBaseQueryHandler<GetOrderByFilterQu
 
 
         var skip = (@params.PageId - 1) * @params.Take;
+        var orders = await result.Skip(skip)
+            .Take(@params.Take)
+            .ToListAsync(cancellationToken); // ابتدا کوئری را به لیست تبدیل کنید
+
+        var data = new List<OrderFilterData>();
+
+        foreach (var order in orders)
+        {
+            var filterData = await order.MapFilterDataAsync(_context);
+            data.Add(filterData);
+        }
         var model = new OrderFilterResult()
         {
-            Data = await result.Skip(skip).Take(@params.Take).Select(order => order.MapFilterData(_context)).ToListAsync(cancellationToken),
+
+            Data = data.ToList(),
             FilterParam = @params
 
         };

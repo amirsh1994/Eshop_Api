@@ -8,6 +8,7 @@ using Shop.Domain.RoleAgg.Repository;
 using Shop.Domain.SellerAgg.Repository;
 using Shop.Domain.SiteEntities.Repositories;
 using Shop.Domain.UserAgg.Repository;
+using Shop.Infrastructure._Utilities.MediatR;
 using Shop.Infrastructure.Persistent.Dapper;
 using Shop.Infrastructure.Persistent.Ef.CategoryAgg;
 using Shop.Infrastructure.Persistent.Ef.CommentAgg;
@@ -35,6 +36,7 @@ public class InfrastructureBootstrapper
         services.AddTransient<ICommentRepository, CommentRepository>();
         services.AddTransient<IShippingMethodRepository, ShippingMethodeRepository>();
         services.AddTransient<DapperContext>(option=> new DapperContext(connectionString));
+        services.AddSingleton<ICustomPublisher,CustomPublisher>();
 
 
         services.AddDbContext<ShopContext>(option =>

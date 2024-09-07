@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Shop.Domain.OrderAgg;
 using Shop.Infrastructure;
 using Shop.Infrastructure.Persistent.Dapper;
@@ -42,12 +43,13 @@ internal static class OrderMapper
         return result.ToList();
     }
 
-    public static OrderFilterData MapFilterData(this Order o,ShopContext context)
+    public static async Task<OrderFilterData> MapFilterDataAsync(this Order o, ShopContext context)
     {
-        var userFullName = context.Users
+        var userFullName = await context.Users
             .Where(x => x.Id == o.UserId)
-            .Select(x => $"{x.Name}{x.Family}")
-            .First();
+            .Select(x => $"{x.Name} {x.Family}")
+            .FirstOrDefaultAsync();  // استفاده از نسخه async برای جلوگیری از مشکلات همزمانی
+
         return new OrderFilterData()
         {
             Status = o.Status,

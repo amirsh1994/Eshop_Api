@@ -1,6 +1,7 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
 using Shop.Domain.OrderAgg.Enums;
+using Shop.Domain.OrderAgg.Events;
 using Shop.Domain.OrderAgg.ValueObjects;
 
 namespace Shop.Domain.OrderAgg;
@@ -12,6 +13,7 @@ public class Order:AggregateRoot
     {
         
     }
+
     public Order(long userId)
     {
         UserId = userId;
@@ -87,6 +89,7 @@ public class Order:AggregateRoot
         }
         currentItem.IncreaseCount(count);
     }
+
     public void DecreaseItemCount(long orderItemId, int count)
     {
         ChangeOrderGuard();
@@ -97,6 +100,7 @@ public class Order:AggregateRoot
         }
         currentItem.DecreaseCount(count);
     }
+
     public void ChangeCountItem(long itemId,int newCount)
     {
         ChangeOrderGuard();
@@ -114,10 +118,11 @@ public class Order:AggregateRoot
         LastUpdate=DateTime.Now;
     }
 
-    public void CheckOut(OrderAddress orderAddress)
+    public void CheckOut(OrderAddress orderAddress, OrderShippingMethod method)
     {
         ChangeOrderGuard();
         this.Address = orderAddress;
+        Methode = method;
 
     }
 
@@ -128,4 +133,13 @@ public class Order:AggregateRoot
             throw new InvalidDomainDataException("امکان ویرایش این محصول وجود ندارد");
         }
     }
+
+    public void Finally()
+    {
+        Status = OrderStatus.Finally;
+        LastUpdate=DateTime.Now;
+        AddDomainEvent(new OrderFinalized(Id));
+    }
+
+
 }

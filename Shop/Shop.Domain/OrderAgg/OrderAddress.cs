@@ -22,7 +22,7 @@ public class OrderAddress:BaseEntity
 
     public string NationalCode { get; private set; }
 
-    public Order Order { get; set; }
+    //public Order Order { get; set; }
 
    
 

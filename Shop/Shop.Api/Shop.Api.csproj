@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Shop.Config\Shop.Config.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Transactions\" />
+  </ItemGroup>
+
 </Project>

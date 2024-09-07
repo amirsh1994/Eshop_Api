@@ -43,8 +43,8 @@ public class CheckOutOrderCommandValidator:AbstractValidator<CheckOutOrderComman
             .NotNull()
             .NotEmpty()
             .WithMessage(ValidationMessages.required("شماره ملی"))
-            .MaximumLength(11).WithMessage("شماره ملی نامعتبر هست")
-            .MinimumLength(11).WithMessage("شماره ملی نامعتبر هست")
+            .MaximumLength(10).WithMessage("شماره ملی نامعتبر هست")
+            .MinimumLength(10).WithMessage("شماره ملی نامعتبر هست")
             .ValidNationalId();
 
 

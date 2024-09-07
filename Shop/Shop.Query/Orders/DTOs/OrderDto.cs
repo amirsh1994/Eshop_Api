@@ -23,6 +23,24 @@ public class OrderDto:BaseDto
     public OrderShippingMethod Methode { get; set; }
 
     public OrderAddress? Address { get; set; }
+
+    public int TotalPrice
+    {
+        get
+        {
+
+            var totTal = Items.Sum(x => x.TotalPrice);
+            if (Discount!=null)
+            {
+                totTal -= Discount.DiscountAmount;
+            }
+            if (Methode!=null)
+            {
+                totTal += Methode.ShippingCost;
+            }
+            return totTal;
+        }
+    }
 }
 
 public class OrderItemDto:BaseDto

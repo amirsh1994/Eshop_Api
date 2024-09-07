@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Domain;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shop.Domain.CategoryAgg;
 using Shop.Domain.CommentAgg;
 using Shop.Domain.OrderAgg;
@@ -7,14 +9,17 @@ using Shop.Domain.RoleAgg;
 using Shop.Domain.SellerAgg;
 using Shop.Domain.SiteEntities;
 using Shop.Domain.UserAgg;
+using Shop.Infrastructure._Utilities.MediatR;
 
 namespace Shop.Infrastructure;
 
-public class ShopContext:DbContext
+public class ShopContext : DbContext
 {
-    public ShopContext(DbContextOptions<ShopContext> options):base(options)
+    private readonly ICustomPublisher _customPublisher;
+
+    public ShopContext(DbContextOptions<ShopContext> options, ICustomPublisher customPublisher) : base(options)
     {
-        
+        _customPublisher = customPublisher;
     }
 
     public DbSet<Category> Categories { get; set; }
@@ -50,6 +55,30 @@ public class ShopContext:DbContext
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
         base.OnModelCreating(modelBuilder);
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        var modifiedEntities = GetModifiedEntities();
+        await PublishEvents(modifiedEntities);
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+    private List<AggregateRoot> GetModifiedEntities() =>
+        ChangeTracker.Entries<AggregateRoot>()
+            .Where(x => x.State != EntityState.Detached)
+            .Select(c => c.Entity)
+            .Where(c => c.DomainEvents.Any()).ToList();
+
+    private async Task PublishEvents(List<AggregateRoot> modifiedEntities)
+    {
+        foreach (var entity in modifiedEntities)
+        {
+            var events = entity.DomainEvents;
+            foreach (var domainEvent in events)
+            {
+                await _customPublisher.Publish(domainEvent, PublishStrategy.ParallelNoWait);
+            }
+        }
     }
 }
 

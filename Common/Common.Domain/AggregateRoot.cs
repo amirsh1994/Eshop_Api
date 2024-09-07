@@ -3,9 +3,10 @@ using Common.Domain;
 
 namespace Common.Domain;
 
-public class AggregateRoot:BaseEntity
+public class AggregateRoot : BaseEntity
 {
     private readonly List<BaseDomainEvent> _domainEvents = new List<BaseDomainEvent>();
+
     [NotMapped]
     public List<BaseDomainEvent> DomainEvents => _domainEvents;
 
@@ -13,11 +14,9 @@ public class AggregateRoot:BaseEntity
     {
         _domainEvents.Add(eventItem);
     }
+
     public void RemoveDomainEvent(BaseDomainEvent eventItem)
     {
         _domainEvents?.Remove(eventItem);
     }
-
-
-
 }
