@@ -26,7 +26,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.Slug)
             .IsRequired()
-            .IsUnicode(false);
+            .IsUnicode(true);
 
         builder.OwnsOne(x => x.SeoData, option =>
         {

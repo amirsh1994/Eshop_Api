@@ -17,7 +17,7 @@ internal class CategoryConfiguration:IEntityTypeConfiguration<Category>
             .HasIndex(x => x.Slug);
 
         builder
-            .Property(x => x.Slug).IsRequired().IsUnicode(false);
+            .Property(x => x.Slug).IsRequired().IsUnicode(true);
 
         builder
             .Property(x => x.Title)

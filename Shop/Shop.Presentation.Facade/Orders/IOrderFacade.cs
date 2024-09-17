@@ -23,6 +23,8 @@ public interface IOrderFacade
 
     Task<OperationResult> FinallyOrder(OrderFinallyCommand command);
 
+    Task<OperationResult> SendOrder(long orderId);
+
     Task<OrderDto?> GetOrderById(long orderId);
 
     Task<OrderFilterResult> GetOrdersByFilter(OrderFilterParams filterParams);

@@ -121,5 +121,13 @@ public class OrderController : ApiController
         return CommandResult(result);
     }
 
+
+    [HttpPut("SendOrder/{orderId:long}")]
+    public async Task<ApiResult> SendOrder(long orderId)
+    {
+        var result = await _orderFacade.SendOrder(orderId);
+        return CommandResult(result);
+    }
+
 }
 
